@@ -1,0 +1,1129 @@
+:root {
+    --orange-primary: #FF8C00;
+    --orange-secondary: #FFA500;
+    --orange-light: #FFB74D;
+    --orange-dark: #E65100;
+    --dark-bg: #1A1A1A;
+    --dark-section: #222222;
+    --text-light: #FFFFFF;
+    --text-orange: #FF8C00;
+    --brown-dark: #5C3D0C;
+    --mobile-blue: #1E90FF;
+    --mobile-purple: #9370DB;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    background-color: var(--dark-bg);
+    color: var(--text-light);
+    overflow-x: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+.logo-text,
+.cta-button {
+    font-family: 'Oxanium', cursive;
+    font-weight: 700;
+}
+
+
+
+/* Header e Navegação */
+
+header {
+    background: linear-gradient(to bottom, rgba(26, 26, 26, 0.95), rgba(26, 26, 26, 0.85));
+    padding: 15px 5%;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    border-bottom: 2px solid var(--orange-primary);
+    backdrop-filter: blur(10px);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+
+/* === ESTILOS ATUALIZADOS PARA O LOGO === */
+
+.logo-icon {
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-icon img {
+    height: 100px;
+    border-radius: 50%;
+    padding: 2px;
+}
+
+.logo:hover .logo-icon img {
+    transform: rotate(360deg);
+    box-shadow: 0 0 20px var(--orange-primary);
+}
+
+
+/* === FIM DOS ESTILOS DO LOGO === */
+
+.logo-text {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--orange-primary), var(--orange-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.logo-text::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, var(--orange-primary), var(--orange-light));
+    border-radius: 2px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin: 0 12px;
+    position: relative;
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.3s;
+    text-transform: uppercase;
+    padding: 5px 0;
+}
+
+.nav-links a:hover {
+    color: var(--orange-primary);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--orange-primary);
+    transition: width 0.3s;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.social-icons {
+    display: flex;
+}
+
+.social-icons a {
+    color: var(--text-light);
+    margin-left: 15px;
+    font-size: 1.2rem;
+    transition: all 0.3s;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.social-icons a:hover {
+    color: var(--orange-primary);
+    background: rgba(255, 140, 0, 0.2);
+    transform: translateY(-3px);
+}
+
+
+/* Banner Principal */
+
+.hero-banner {
+    height: 100vh;
+    background: linear-gradient(rgba(92, 61, 12, 0.7), rgba(26, 26, 26, 0.9)), url('https://img.goodfon.com/original/2560x1440/1/f5/firewatch-igra-minimalizm.jpg') no-repeat center center/cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 5%;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 30%, var(--dark-bg) 90%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+}
+
+.hero-content h1 {
+    font-size: 4.5rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    background: linear-gradient(to right, var(--orange-primary), var(--orange-light), var(--orange-primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(255, 140, 0, 0.5);
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(255, 140, 0, 0.8), 0 0 30px rgba(255, 140, 0, 0.6);
+    }
+}
+
+.hero-content p {
+    font-size: 1.3rem;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    line-height: 1.6;
+}
+
+.cta-button {
+    display: inline-block;
+    background: linear-gradient(to right, var(--orange-primary), var(--orange-dark));
+    color: var(--dark-bg);
+    padding: 15px 35px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 140, 0, 0.6);
+}
+
+.cta-button:active {
+    transform: translateY(1px);
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: all 0.5s;
+    z-index: -1;
+}
+
+.cta-button:hover::before {
+    left: 100%;
+}
+
+
+/* Seções */
+
+.section-title {
+    text-align: center;
+    margin: 80px 0 50px;
+    position: relative;
+}
+
+.section-title h2 {
+    font-size: 2.8rem;
+    text-transform: uppercase;
+    background: linear-gradient(to right, var(--orange-primary), var(--orange-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    position: relative;
+    padding: 0 20px;
+}
+
+.section-title h2::before,
+.section-title h2::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--orange-primary));
+}
+
+.section-title h2::before {
+    left: -60px;
+}
+
+.section-title h2::after {
+    right: -60px;
+    background: linear-gradient(to left, transparent, var(--orange-primary));
+}
+
+section {
+    padding: 80px 5%;
+}
+
+.dark-section {
+    background: linear-gradient(to bottom, var(--dark-section), #2a2a2a);
+    position: relative;
+}
+
+.dark-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, transparent, var(--orange-primary), transparent);
+}
+
+
+/* História */
+
+.history-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.history-text {
+    background: linear-gradient(to bottom, rgba(34, 34, 34, 0.9), rgba(26, 26, 26, 0.9));
+    padding: 40px;
+    border-radius: 15px;
+    border-left: 5px solid var(--orange-primary);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.history-text p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.history-text p:last-child {
+    margin-bottom: 0;
+}
+
+.highlight {
+    color: var(--orange-primary);
+    font-weight: 600;
+}
+
+.mobile-games {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.game-card {
+    background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+    width: 200px;
+    padding: 25px 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+    border: 1px solid rgba(255, 140, 0, 0.2);
+}
+
+.game-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    border-color: var(--orange-primary);
+}
+
+.game-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: var(--orange-primary);
+}
+
+.game-card h3 {
+    color: var(--text-light);
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.game-card p {
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+
+/* Seção de Camisas */
+
+.merch-section {
+    background: linear-gradient(to bottom, var(--dark-section), #2a2a2a);
+    padding: 80px 5%;
+    text-align: center;
+}
+
+.jersey-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 50px;
+    margin-top: 40px;
+}
+
+.jersey-card {
+    background: linear-gradient(to bottom, rgba(34, 34, 34, 0.9), rgba(26, 26, 26, 0.9));
+    border-radius: 15px;
+    padding: 30px;
+    width: 320px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 140, 0, 0.3);
+    transition: all 0.3s;
+}
+
+.jersey-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(255, 140, 0, 0.2);
+}
+
+.jersey-display {
+    position: relative;
+    height: 350px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+.jersey {
+    width: 220px;
+    height: 280px;
+    position: relative;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.jersey-front,
+.jersey-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    /* Correção para navegadores WebKit */
+    backface-visibility: hidden;
+    /* Correção para o giro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid var(--orange-primary);
+    border-radius: 10px;
+    background-color: #000;
+    overflow: hidden;
+}
+
+.jersey-front img,
+.jersey-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.jersey-back {
+    transform: rotateY(180deg);
+}
+
+.jersey-logo {
+    font-size: 80px;
+    color: var(--orange-primary);
+    text-shadow: 0 0 15px rgba(255, 140, 0, 0.5);
+}
+
+.jersey-text {
+    font-family: 'Oxanium', cursive;
+    font-weight: 800;
+    font-size: 28px;
+    color: var(--orange-primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 20px;
+    text-shadow: 0 0 10px rgba(255, 140, 0, 0.4);
+}
+
+.jersey-details {
+    margin: 20px 0;
+}
+
+.jersey-details h3 {
+    color: var(--orange-primary);
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.jersey-details p {
+    color: #ccc;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.jersey-price {
+    font-size: 24px;
+    color: var(--orange-light);
+    font-weight: 700;
+    margin: 15px 0;
+}
+
+.buy-button {
+    display: inline-block;
+    background: linear-gradient(to right, var(--orange-primary), var(--orange-dark));
+    color: #000;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
+}
+
+.buy-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 140, 0, 0.6);
+    color: #000;
+}
+
+.flip-button {
+    background: rgba(255, 140, 0, 0.2);
+    color: var(--orange-primary);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.flip-button:hover {
+    background: rgba(255, 140, 0, 0.3);
+}
+
+
+/* Notícias */
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 30px;
+}
+
+.news-card {
+    background: linear-gradient(to bottom, rgba(34, 34, 34, 0.9), rgba(26, 26, 26, 0.9));
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s;
+    border-bottom: 3px solid var(--orange-primary);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.news-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+}
+
+.news-image {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.news-card:hover .news-image img {
+    transform: scale(1.1);
+}
+
+.news-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to top, rgba(26, 26, 26, 0.9), transparent);
+}
+
+.news-content {
+    padding: 25px;
+}
+
+.news-content h3 {
+    margin-bottom: 15px;
+    color: var(--orange-secondary);
+    font-size: 1.4rem;
+}
+
+.news-content p {
+    margin-bottom: 20px;
+    color: #ccc;
+    line-height: 1.6;
+}
+
+.news-date {
+    color: var(--orange-primary);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.read-more {
+    color: var(--orange-primary);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.read-more i {
+    margin-left: 5px;
+    transition: transform 0.3s;
+}
+
+.read-more:hover {
+    color: var(--orange-light);
+}
+
+.read-more:hover i {
+    transform: translateX(5px);
+}
+
+
+/* Jogadores */
+
+.players-slider {
+    display: flex;
+    overflow-x: auto;
+    padding: 30px 10px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--orange-primary) var(--dark-section);
+    scroll-behavior: smooth;
+}
+
+.players-slider::-webkit-scrollbar {
+    height: 8px;
+}
+
+.players-slider::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, var(--orange-primary), var(--orange-dark));
+    border-radius: 4px;
+}
+
+.player-card {
+    flex: 0 0 auto;
+    width: 280px;
+    margin-right: 25px;
+    background: linear-gradient(to bottom, #2a2a2a, var(--dark-section));
+    border-radius: 15px;
+    overflow: hidden;
+    text-align: center;
+    border-left: 4px solid var(--orange-primary);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s;
+}
+
+.player-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+}
+
+.player-image {
+    height: 280px;
+    overflow: hidden;
+    position: relative;
+}
+
+.player-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.player-card:hover .player-image img {
+    transform: scale(1.1);
+}
+
+.player-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to top, var(--dark-section), transparent);
+}
+
+.player-info {
+    padding: 20px;
+}
+
+.player-info h3 {
+    color: var(--orange-primary);
+    margin-bottom: 8px;
+    font-size: 1.4rem;
+}
+
+.player-info p {
+    color: #ccc;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+}
+
+.player-role {
+    display: inline-block;
+    background: rgba(255, 140, 0, 0.2);
+    color: var(--orange-light);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+
+/* Footer */
+
+footer {
+    background: linear-gradient(to top, #151515, var(--dark-bg));
+    padding: 60px 5% 30px;
+    position: relative;
+    border-top: 2px solid var(--orange-primary);
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, transparent, var(--orange-primary), transparent);
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-column h3 {
+    color: var(--orange-primary);
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-column h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--orange-primary);
+}
+
+.footer-column p {
+    color: #ccc;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s;
+    display: inline-flex;
+    align-items: center;
+}
+
+.footer-links a:hover {
+    color: var(--orange-primary);
+}
+
+.footer-links a i {
+    margin-right: 8px;
+    font-size: 0.8rem;
+}
+
+.footer-social {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.footer-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+    transition: all 0.3s;
+}
+
+.footer-social a:hover {
+    background: var(--orange-primary);
+    color: var(--dark-bg);
+    transform: translateY(-3px);
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #999;
+    font-size: 0.9rem;
+}
+
+
+/* Responsividade */
+
+@media (max-width: 992px) {
+    .hero-content h1 {
+        font-size: 3.5rem;
+    }
+    .nav-links {
+        display: none;
+        /* Simplificado para o exemplo, idealmente seria um menu hamburguer */
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.8rem;
+    }
+    .hero-content p {
+        font-size: 1.1rem;
+    }
+    .section-title h2 {
+        font-size: 2.2rem;
+    }
+    .section-title h2::before,
+    .section-title h2::after {
+        width: 30px;
+    }
+    .section-title h2::before {
+        left: -40px;
+    }
+    .section-title h2::after {
+        right: -40px;
+    }
+    .jersey-container {
+        gap: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+    .logo-text {
+        font-size: 1.5rem;
+    }
+    .section-title h2 {
+        font-size: 1.8rem;
+    }
+    .section-title h2::before,
+    .section-title h2::after {
+        display: none;
+    }
+    .history-text {
+        padding: 25px;
+    }
+    .jersey {
+        width: 180px;
+        height: 230px;
+    }
+    .jersey-logo {
+        font-size: 60px;
+    }
+    .jersey-text {
+        font-size: 22px;
+    }
+}
+
+/* =========================================
+   ESTILOS DA PÁGINA DE LOGIN
+   ========================================= */
+
+   .login-section {
+    min-height: 100vh;
+    /* Usando o mesmo background do Hero, mas com um overlay mais escuro para foco no formulário */
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('https://img.goodfon.com/original/2560x1440/1/f5/firewatch-igra-minimalizm.jpg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 100px; /* Espaço para a navbar fixa */
+}
+
+.login-container {
+    background: linear-gradient(to bottom, rgba(34, 34, 34, 0.95), rgba(26, 26, 26, 0.95));
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 140, 0, 0.3);
+    box-shadow: 0 0 30px rgba(255, 140, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efeito de brilho no topo do card */
+.login-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, var(--orange-dark), var(--orange-primary), var(--orange-light));
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-header h2 {
+    font-family: 'Oxanium', cursive;
+    color: var(--orange-primary);
+    font-size: 2rem;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(255, 140, 0, 0.3);
+}
+
+.login-header p {
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+/* Estilos dos Inputs */
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--orange-primary);
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+
+.input-group input {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 2px solid #333;
+    border-radius: 30px;
+    padding: 15px 15px 15px 45px; /* Padding esquerdo maior para o ícone */
+    color: var(--text-light);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.input-group input:focus {
+    border-color: var(--orange-primary);
+    box-shadow: 0 0 10px rgba(255, 140, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.input-group input:focus + i {
+    color: var(--orange-light);
+}
+
+/* Opções do Formulário (Lembrar / Esqueceu senha) */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    font-size: 0.85rem;
+    color: #ccc;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.remember-me input {
+    margin-right: 8px;
+    accent-color: var(--orange-primary);
+    cursor: pointer;
+}
+
+.forgot-password {
+    color: var(--orange-primary);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.forgot-password:hover {
+    color: var(--orange-light);
+    text-decoration: underline;
+}
+
+/* Botão de Login */
+.login-btn {
+    width: 100%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    border: none;
+    margin-top: 10px;
+}
+
+/* Rodapé do Login */
+.login-footer {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.login-footer a {
+    color: var(--orange-primary);
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade para Login */
+@media (max-width: 576px) {
+    .login-container {
+        width: 90%;
+        padding: 30px 20px;
+    }
+    
+    .form-options {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+}
+
+/* ... (seu código anterior continua igual) ... */
+
+/* === BOTÃO DE LOGIN NO MENU === */
+.login-nav-btn {
+    background-color: transparent;
+    border: 2px solid var(--orange-primary);
+    color: var(--orange-primary);
+    padding: 8px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    margin-left: 15px;
+    cursor: pointer;
+    font-family: 'Oxanium', cursive;
+}
+
+.login-nav-btn:hover {
+    background-color: var(--orange-primary);
+    color: #000;
+    box-shadow: 0 0 15px var(--orange-primary);
+}
+
+/* Ajuste para telas pequenas */
+@media (max-width: 768px) {
+    .login-nav-btn {
+        display: none; /* No mobile, pode ficar dentro do menu hamburguer se quiser */
+    }
+}
+

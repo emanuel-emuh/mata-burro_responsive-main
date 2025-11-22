@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Mata-Burro E-Sports</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oxaniu:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navbar Simplificada -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none; display: flex; align-items: center;">
+                    <div class="logo-icon">
+                        <img src="https://github.com/emanuel-emuh/mata-burro_responsive/blob/main/1758081673451.jpg?raw=true" alt="Logo Mata-Burro E-Sports">
+                    </div>
+                    <div class="logo-text">Mata-Burro</div>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Voltar ao Início</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="login-section">
+        <div class="login-container">
+            <div class="login-header">
+                <h2>Junte-se ao Time</h2>
+                <p>Crie sua conta e faça parte da nossa comunidade</p>
+            </div>
+            
+            <form class="login-form" id="registerForm">
+                
+                <!-- Campo de Nome/Nick -->
+                <div class="input-group">
+                    <i class="fas fa-gamepad"></i>
+                    <input type="text" id="nameInput" placeholder="Seu Nick (Nome no Jogo)" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="emailInput" placeholder="Seu E-mail" required>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="passwordInput" placeholder="Crie uma Senha" required minlength="6">
+                </div>
+
+                <button type="submit" class="cta-button login-btn">Cadastrar</button>
+            </form>
+
+            <div class="login-footer">
+                <p>Já tem uma conta? <a href="login.html">Faça Login aqui</a></p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="copyright">
+            &copy; 2025 Mata-Burro E-Sports. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <!-- Script de Lógica de Cadastro -->
+    <script type="module" src="js/register.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja Oficial - Mata-Burro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oxaniu:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos Específicos da Loja */
+        
+        .shop-container {
+            display: flex;
+            padding: 120px 5% 50px;
+            gap: 30px;
+            min-height: 100vh;
+        }
+        
+        .products-grid {
+            flex: 3;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        /* Card do Produto */
+        
+        .shop-card {
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .shop-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--orange-primary);
+        }
+        
+        .shop-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .shop-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .shop-title {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .shop-price {
+            color: var(--orange-primary);
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .add-cart-btn {
+            margin-top: auto;
+            background: transparent;
+            border: 2px solid var(--orange-primary);
+            color: var(--orange-primary);
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        
+        .add-cart-btn:hover {
+            background: var(--orange-primary);
+            color: #000;
+        }
+        /* Carrinho Lateral */
+        
+        .cart-sidebar {
+            flex: 1;
+            background: #1a1a1a;
+            border: 1px solid var(--orange-primary);
+            border-radius: 10px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+            min-width: 300px;
+        }
+        
+        .cart-header {
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .cart-items {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+        
+        .cart-total {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: right;
+            color: var(--orange-primary);
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .remove-item {
+            color: red;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .shop-container {
+                flex-direction: column;
+            }
+            .cart-sidebar {
+                position: static;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Mata-Burro Store</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Início</a></li>
+            </ul>
+            <a href="login.html" id="navLoginBtn" class="login-nav-btn">Login</a>
+        </nav>
+    </header>
+
+    <div class="shop-container">
+        <!-- Lista de Produtos (Vem do Firebase) -->
+        <div class="products-grid" id="productsGrid">
+            <p style="color: #fff;">Carregando produtos...</p>
+        </div>
+
+        <!-- Carrinho de Compras -->
+        <div class="cart-sidebar">
+            <div class="cart-header">
+                <h3><i class="fas fa-shopping-cart"></i> Seu Carrinho</h3>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <p style="color: #777; text-align: center;">Carrinho vazio</p>
+            </div>
+            <div class="cart-total">
+                Total: R$ <span id="cartTotal">0.00</span>
+            </div>
+            <button id="checkoutBtn" class="cta-button checkout-btn">Finalizar Compra (WhatsApp)</button>
+        </div>
+    </div>
+
+    <!-- Importante: check-login para mostrar nome e store.js para a loja -->
+    <script type="module" src="js/check-login.js"></script>
+    <script type="module" src="js/store.js"></script>
+</body>
+
+</html>

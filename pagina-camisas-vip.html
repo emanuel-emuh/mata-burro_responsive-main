@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camisa Oficial Mata-Burro 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Oxanium:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --orange-primary: #FF8C00;
+      --orange-secondary: #FFA500;
+      --orange-light: #FFB74D;
+      --orange-dark: #E65100;
+      --dark-bg: #1A1A1A;
+      --dark-section: #222222;
+      --text-light: #FFFFFF;
+      --text-orange: #FF8C00;
+      --brown-dark: #5C3D0C;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      color: var(--text-light);
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Oxanium', cursive;
+      font-weight: 700;
+    }
+
+    /* HEADER & NAVBAR */
+    header {
+      background: linear-gradient(to bottom, rgba(26,26,26,0.95), rgba(26,26,26,0.85));
+      padding: 15px 5%;
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+      border-bottom: 2px solid var(--orange-primary);
+      backdrop-filter: blur(10px);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--orange-primary), var(--orange-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 2px;
+      position: relative;
+    }
+
+    .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(to right, var(--orange-primary), var(--orange-light));
+      border-radius: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      margin: 0 12px;
+      position: relative;
+    }
+
+    .nav-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: color 0.3s;
+      text-transform: uppercase;
+      padding: 5px 0;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--orange-primary);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--orange-primary);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    /* PRODUTO */
+    .product-page {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      padding: 120px 5% 40px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .gallery {
+      flex: 1 1 350px;
+      max-width: 450px;
+      text-align: center;
+    }
+
+    .main-image {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px var(--orange-primary);
+      transition: transform 0.3s;
+    }
+
+    .main-image:hover {
+      transform: scale(1.05);
+    }
+
+    .thumbs {
+      margin-top: 15px;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .thumbs img {
+      width: 90px;
+      border-radius: 5px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border 0.3s;
+    }
+
+    .thumbs img:hover {
+      border: 2px solid var(--orange-primary);
+    }
+
+    .details {
+      flex: 1 1 350px;
+      max-width: 450px;
+    }
+
+    .price {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--orange-primary);
+      margin: 15px 0;
+    }
+
+    .buy-box {
+      margin: 20px 0;
+    }
+
+    .buy-box input {
+      width: 60px;
+      padding: 8px;
+      margin-left: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .buy-btn {
+      display: inline-block;
+      margin-left: 15px;
+      background: var(--orange-primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .buy-btn:hover {
+      background: var(--orange-light);
+      transform: translateY(-3px);
+    }
+
+    .desc h2 {
+      margin-top: 20px;
+      border-bottom: 2px solid var(--orange-primary);
+      padding-bottom: 5px;
+    }
+
+    .desc p {
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: var(--dark-section);
+      margin-top: 40px;
+      border-top: 2px solid var(--orange-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">Mata-Burro</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="camisas.html" class="active">Camisas</a></li>
+        <li><a href="#">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- PRODUTO -->
+  <section class="product-page"> 
+    <div class="gallery">
+      <!-- IMAGEM PRINCIPAL -->
+      <img src="https://github.com/emanuel-emuh/mata-burro_responsive/blob/main/Edi%C3%A7%C3%A3o%20Limitada%20frente.png?raw=true" 
+           alt="Camisa Frente" class="main-image" id="mainImage">
+      
+      <!-- MINIATURAS -->
+      <div class="thumbs">
+        <img src="https://github.com/emanuel-emuh/mata-burro_responsive/blob/main/Edi%C3%A7%C3%A3o%20Limitada%20frente.png?raw=true" 
+             alt="Frente" onclick="trocarImagem(this)">
+        <img src="https://github.com/emanuel-emuh/mata-burro_responsive/blob/main/Camisa%20edi%C3%A7%C3%A3o%20limitada%20costas.png?raw=true" 
+             alt="Costas" onclick="trocarImagem(this)">
+      </div>
+    </div>
+
+    <div class="details">
+      <h1>Camisa especial com detalhes premium em laranja. Edição limitada para os fãs mais dedicados do Mata-Burro.</h1>
+      <p class="price">R$ 199,90</p>
+
+      <div class="buy-box">
+        <label for="qtd">Quantidade:</label>
+        <input type="number" id="qtd" min="1" value="1">
+        <a href="https://wa.me/5584999999999?text=Olá! Quero comprar a Camisa Oficial Mata-Burro 2025" 
+           target="_blank" class="buy-btn">Comprar Agora</a>
+      </div>
+
+      <div class="desc">
+        <p>Camisa especial com detalhes premium em laranja. Edição limitada para os fãs mais dedicados do Mata-Burro.</p>
+        <p><strong>Material:</strong> Algodão premium</p>
+        <p><strong>Cores:</strong> Preto com detalhes em laranja brilhante</p>
+        <p><strong>Disponível nos tamanhos:</strong> M, G, GG</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Mata-Burro E-Sports. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    function trocarImagem(elemento) {
+      document.getElementById("mainImage").src = elemento.src;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Mata-Burro E-Sports</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oxaniu:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none; display: flex; align-items: center;">
+                    <div class="logo-icon">
+                        <img src="https://github.com/emanuel-emuh/mata-burro_responsive/blob/main/1758081673451.jpg?raw=true" alt="Logo Mata-Burro E-Sports">
+                    </div>
+                    <div class="logo-text">Mata-Burro</div>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Voltar ao Início</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="login-section">
+        <div class="login-container">
+            <div class="login-header">
+                <h2>Área do Membro</h2>
+                <p>Bem-vindo de volta, jogador!</p>
+            </div>
+            
+            <!-- Adicionado ID ao formulário -->
+            <form class="login-form" id="loginForm">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <!-- Adicionado ID emailInput -->
+                    <input type="email" id="emailInput" placeholder="Seu E-mail" required>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <!-- Adicionado ID passwordInput -->
+                    <input type="password" id="passwordInput" placeholder="Sua Senha" required>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox">
+                        <span>Lembrar de mim</span>
+                    </label>
+                    <a href="#" class="forgot-password">Esqueceu a senha?</a>
+                </div>
+
+                <button type="submit" class="cta-button login-btn">Entrar</button>
+            </form>
+
+            <div class="login-footer">
+                <p>Ainda não faz parte do time? <a href="register.html">Fale com o líder</a></p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="copyright">
+            &copy; 2025 Mata-Burro E-Sports. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <!-- IMPORTANTE: type="module" permite usar os imports do Firebase -->
+    <script type="module" src="js/login.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

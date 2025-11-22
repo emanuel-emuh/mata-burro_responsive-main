@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Mata-Burro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oxaniu:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-container {
+            max-width: 800px;
+            margin: 120px auto 50px;
+            padding: 30px;
+            background: rgba(30, 30, 30, 0.95);
+            border-radius: 15px;
+            border: 1px solid var(--orange-primary);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: var(--orange-primary);
+            margin-bottom: 5px;
+            font-family: 'Oxanium';
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background: #333;
+            border: 1px solid #555;
+            color: #fff;
+            border-radius: 5px;
+        }
+        
+        .preview-img {
+            max-width: 200px;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Mata-Burro Admin</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Voltar ao Site</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="admin-container">
+        <h2>Adicionar Novo Produto</h2>
+        <form id="productForm">
+            <div class="form-group">
+                <label>Nome do Produto</label>
+                <input type="text" id="prodName" required placeholder="Ex: Camisa Oficial 2025">
+            </div>
+
+            <div class="form-group">
+                <label>Preço (R$)</label>
+                <input type="number" id="prodPrice" step="0.01" required placeholder="Ex: 149.90">
+            </div>
+
+            <div class="form-group">
+                <label>URL da Imagem</label>
+                <input type="url" id="prodImage" required placeholder="https://..." onchange="previewImage(this)">
+                <img id="imgPreview" class="preview-img">
+            </div>
+
+            <div class="form-group">
+                <label>Descrição</label>
+                <textarea id="prodDesc" rows="4" placeholder="Detalhes do produto..."></textarea>
+            </div>
+
+            <button type="submit" class="cta-button">Salvar Produto</button>
+        </form>
+    </section>
+
+    <script>
+        function previewImage(input) {
+            const img = document.getElementById('imgPreview');
+            if (input.value) {
+                img.src = input.value;
+                img.style.display = 'block';
+            }
+        }
+    </script>
+    <script type="module" src="js/admin.js"></script>
+</body>
+
+</html>
