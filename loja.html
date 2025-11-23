@@ -12,41 +12,51 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* === ESTILOS ESPECÍFICOS DA LOJA === */
+        /* === ESTILOS EXCLUSIVOS DA LOJA === */
         
-        .shop-container {
-            display: flex;
-            padding: 120px 5% 50px;
-            gap: 30px;
+        body {
+            background-color: var(--dark-bg);
             min-height: 100vh;
-            align-items: flex-start;
         }
-        /* Área Principal (Filtros + Produtos) */
+        /* Container Principal */
         
-        .products-section {
-            flex: 3;
+        .shop-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 5% 60px;
+            /* Margem topo para navbar */
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            /* Produtos vs Carrinho */
+            gap: 40px;
+            align-items: start;
         }
-        /* === 1. FILTROS (Categorias) === */
+        /* === 1. ÁREA DE PRODUTOS === */
         
-        .filters {
+        .products-area {
+            width: 100%;
+        }
+        /* Barra de Filtros */
+        
+        .filters-bar {
             display: flex;
             gap: 15px;
             margin-bottom: 30px;
             flex-wrap: wrap;
             padding-bottom: 20px;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .filter-btn {
-            background: #222;
-            border: 1px solid #444;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: #ccc;
             padding: 10px 25px;
-            border-radius: 30px;
+            border-radius: 50px;
             cursor: pointer;
             font-family: 'Oxanium', cursive;
             font-weight: 600;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             text-transform: uppercase;
             font-size: 0.9rem;
         }
@@ -54,189 +64,251 @@
         .filter-btn:hover {
             border-color: var(--orange-primary);
             color: #fff;
+            transform: translateY(-2px);
         }
         
         .filter-btn.active {
             background: var(--orange-primary);
-            color: #1a1a1a;
+            color: #111;
             border-color: var(--orange-primary);
             box-shadow: 0 0 15px rgba(255, 140, 0, 0.4);
         }
-        /* === 2. GRID DE PRODUTOS === */
+        /* Grid de Produtos */
         
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
         }
+        /* Card do Produto */
         
         .shop-card {
-            background: #222;
+            background: linear-gradient(145deg, #222, #1a1a1a);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 15px;
             overflow: hidden;
-            border: 1px solid #333;
-            transition: 0.3s;
             display: flex;
             flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s;
             position: relative;
         }
         
         .shop-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             border-color: var(--orange-primary);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .card-img-container {
+            width: 100%;
+            height: 250px;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         
         .shop-img {
             width: 100%;
-            height: 250px;
+            height: 100%;
             object-fit: cover;
-            border-bottom: 1px solid #333;
+            transition: transform 0.5s;
         }
         
-        .shop-info {
+        .shop-card:hover .shop-img {
+            transform: scale(1.08);
+        }
+        
+        .card-body {
             padding: 20px;
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
-            flex-grow: 1;
         }
         
         .shop-title {
             color: #fff;
             font-size: 1.1rem;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-family: 'Oxanium', cursive;
             line-height: 1.4;
         }
         
         .shop-price {
             color: var(--orange-primary);
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-bottom: 15px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
         }
         
-        .add-cart-btn {
+        .add-btn {
             margin-top: auto;
             background: transparent;
             border: 2px solid var(--orange-primary);
             color: var(--orange-primary);
             padding: 10px;
-            cursor: pointer;
             border-radius: 8px;
             font-weight: bold;
+            cursor: pointer;
             transition: 0.3s;
             text-transform: uppercase;
             font-family: 'Oxanium', cursive;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         
-        .add-cart-btn:hover {
+        .add-btn:hover {
             background: var(--orange-primary);
-            color: #1a1a1a;
+            color: #000;
         }
-        /* === 3. CARRINHO LATERAL === */
+        /* === 2. CARRINHO LATERAL (STICKY) === */
         
-        .cart-sidebar {
-            flex: 1;
+        .cart-box {
             background: #1a1a1a;
             border: 1px solid var(--orange-primary);
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 25px;
             position: sticky;
             top: 100px;
-            /* Fica fixo ao rolar */
-            min-width: 300px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            /* Faz o carrinho acompanhar o scroll */
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
         }
         
         .cart-header {
-            border-bottom: 1px solid #333;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            color: var(--orange-primary);
-            font-family: 'Oxanium', cursive;
             display: flex;
             align-items: center;
             gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            color: var(--orange-primary);
         }
         
-        .cart-items {
+        .cart-header h3 {
+            font-family: 'Oxanium', cursive;
+            font-size: 1.3rem;
+            margin: 0;
+        }
+        
+        .cart-list {
             max-height: 400px;
             overflow-y: auto;
             margin-bottom: 20px;
+            padding-right: 5px;
         }
-        /* Scrollbar personalizada pro carrinho */
+        /* Scrollbar fina para o carrinho */
         
-        .cart-items::-webkit-scrollbar {
+        .cart-list::-webkit-scrollbar {
             width: 5px;
         }
         
-        .cart-items::-webkit-scrollbar-thumb {
+        .cart-list::-webkit-scrollbar-thumb {
             background: #444;
-            border-radius: 5px;
+            border-radius: 10px;
         }
         
         .cart-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #252525;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #333;
             font-size: 0.9rem;
         }
         
-        .remove-item {
+        .item-info strong {
+            display: block;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+        
+        .item-info small {
+            color: #888;
+        }
+        
+        .item-price {
+            color: var(--orange-primary);
+            font-weight: bold;
+            display: block;
+            margin-top: 3px;
+        }
+        
+        .remove-btn {
             color: #ff4444;
             cursor: pointer;
             padding: 5px;
+            font-size: 0.9rem;
+            opacity: 0.7;
             transition: 0.2s;
         }
         
-        .remove-item:hover {
-            transform: scale(1.2);
+        .remove-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
         }
         
-        .cart-total {
-            font-size: 1.3rem;
-            font-weight: bold;
-            text-align: right;
+        .cart-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
             color: #fff;
-            border-top: 1px solid #333;
-            padding-top: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-family: 'Oxanium', cursive;
+        }
+        
+        .total-price {
+            color: var(--orange-primary);
+            font-weight: 700;
         }
         
         .checkout-btn {
             width: 100%;
-            background: linear-gradient(to right, #25D366, #128C7E);
-            /* Cor WhatsApp */
+            background: linear-gradient(45deg, #25D366, #128C7E);
+            /* Verde WhatsApp */
             color: #fff;
             border: none;
-            padding: 12px;
+            padding: 15px;
             border-radius: 50px;
             font-weight: bold;
+            font-size: 1rem;
             cursor: pointer;
             transition: 0.3s;
             text-transform: uppercase;
-            font-family: 'Oxanium';
+            font-family: 'Oxanium', cursive;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
         .checkout-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
         }
         /* Responsividade */
         
         @media (max-width: 900px) {
-            .shop-container {
-                flex-direction: column;
+            .shop-wrapper {
+                grid-template-columns: 1fr;
+                /* Vira coluna única no mobile */
             }
-            .cart-sidebar {
-                width: 100%;
+            .cart-box {
                 position: static;
+                /* Remove sticky no mobile */
+                margin-top: 40px;
             }
         }
     </style>
@@ -260,11 +332,11 @@
         </nav>
     </header>
 
-    <div class="shop-container">
+    <div class="shop-wrapper">
 
-        <div class="products-section">
+        <main class="products-area">
 
-            <div class="filters">
+            <div class="filters-bar">
                 <button class="filter-btn active" onclick="filterProducts('todos')">Todos</button>
                 <button class="filter-btn" onclick="filterProducts('camisas')">Camisas</button>
                 <button class="filter-btn" onclick="filterProducts('acessorios')">Acessórios</button>
@@ -272,27 +344,32 @@
             </div>
 
             <div class="products-grid" id="productsGrid">
-                <p style="color: #fff; font-size: 1.1rem;">Carregando catálogo...</p>
+                <p style="color: #fff; font-size: 1.1rem;">A carregar catálogo...</p>
             </div>
-        </div>
+        </main>
 
-        <div class="cart-sidebar">
+        <aside class="cart-box">
             <div class="cart-header">
-                <h3><i class="fas fa-shopping-cart"></i> Seu Carrinho</h3>
+                <i class="fas fa-shopping-cart fa-lg"></i>
+                <h3>Seu Carrinho</h3>
             </div>
 
-            <div class="cart-items" id="cartItems">
-                <p style="color: #777; text-align: center; padding: 20px;">Carrinho vazio</p>
+            <div class="cart-list" id="cartItems">
+                <p style="color: #666; text-align: center; margin-top: 20px;">Seu carrinho está vazio.</p>
             </div>
 
-            <div class="cart-total">
-                Total: <span style="color: var(--orange-primary);">R$ <span id="cartTotal">0.00</span></span>
-            </div>
+            <div class="cart-footer">
+                <div class="total-row">
+                    <span>Total:</span>
+                    <span class="total-price">R$ <span id="cartTotal">0.00</span></span>
+                </div>
 
-            <button id="checkoutBtn" class="checkout-btn">
-                <i class="fab fa-whatsapp"></i> Finalizar Compra
-            </button>
-        </div>
+                <button id="checkoutBtn" class="checkout-btn">
+                    <i class="fab fa-whatsapp"></i> Finalizar Pedido
+                </button>
+            </div>
+        </aside>
+
     </div>
 
     <script type="module" src="js/check-login.js"></script>
