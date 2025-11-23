@@ -95,7 +95,7 @@ window.deleteProduct = async(id, name) => {
 };
 
 // ==========================================
-// 4. SALVAR NOVO PRODUTO (Com Categoria)
+// 4. SALVAR NOVO PRODUTO (Com Categoria e Foto Costas)
 // ==========================================
 if (productForm) {
     productForm.addEventListener('submit', async(e) => {
@@ -103,9 +103,10 @@ if (productForm) {
 
         const name = document.getElementById('prodName').value;
         const price = parseFloat(document.getElementById('prodPrice').value);
-        // Pega o valor do seletor de Categoria
         const category = document.getElementById('prodCategory').value;
         const image = document.getElementById('prodImage').value;
+        // NOVO: Pega a imagem das costas
+        const imageBack = document.getElementById('prodImageBack').value;
         const description = document.getElementById('prodDesc').value;
 
         const btn = productForm.querySelector('button');
@@ -118,8 +119,9 @@ if (productForm) {
             await addDoc(collection(db, "products"), {
                 name: name,
                 price: price,
-                category: category, // Salva no banco
+                category: category,
                 image: image,
+                imageBack: imageBack, // SALVA NO BANCO
                 description: description,
                 createdAt: new Date()
             });

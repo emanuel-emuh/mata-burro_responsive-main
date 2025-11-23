@@ -42,7 +42,7 @@ async function loadProducts() {
 }
 
 // ==========================================
-// 2. RENDERIZAR PRODUTOS (A CORREÇÃO ESTÁ AQUI)
+// 2. RENDERIZAR PRODUTOS (CARDS)
 // ==========================================
 function renderProducts(listaDeProdutos) {
     productsGrid.innerHTML = "";
@@ -58,11 +58,6 @@ function renderProducts(listaDeProdutos) {
         const card = document.createElement('div');
         card.className = 'shop-card';
 
-        // --- AQUI ESTAVA O PROBLEMA ---
-        // Atualizei as classes para baterem com o novo loja.html:
-        // 1. Envolvi a img em 'card-img-container'
-        // 2. Troquei 'shop-info' por 'card-body'
-        // 3. Troquei 'add-cart-btn' por 'add-btn'
         card.innerHTML = `
             <div class="card-img-container">
                 <img src="${imgUrl}" alt="${product.name}" class="shop-img" onerror="this.src='https://via.placeholder.com/300?text=Sem+Imagem'">
@@ -70,9 +65,16 @@ function renderProducts(listaDeProdutos) {
             <div class="card-body">
                 <h3 class="shop-title">${product.name}</h3>
                 <p class="shop-price">R$ ${product.price.toFixed(2)}</p>
-                <button class="add-btn" onclick="addToCart('${product.id}', '${product.name}', ${product.price})">
-                    <i class="fas fa-cart-plus"></i> Adicionar
-                </button>
+                
+                <div class="card-actions">
+                    <button class="action-btn btn-details" onclick="openModal('${product.id}')">
+                        <i class="fas fa-eye"></i> Detalhes
+                    </button>
+                    
+                    <button class="action-btn btn-add" onclick="addToCart('${product.id}', '${product.name}', ${product.price})">
+                        <i class="fas fa-cart-plus"></i>
+                    </button>
+                </div>
             </div>
         `;
         productsGrid.appendChild(card);
@@ -86,7 +88,6 @@ window.filterProducts = (categoria) => {
     const botoes = document.querySelectorAll('.filter-btn');
     botoes.forEach(btn => {
         const btnText = btn.innerText.toLowerCase();
-        // Remove acentos (ex: acessórios -> acessorios)
         const btnNormalizado = btnText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
         if (btnNormalizado === categoria || (categoria === 'todos' && btnNormalizado === 'todos')) {
@@ -105,17 +106,74 @@ window.filterProducts = (categoria) => {
 };
 
 // ==========================================
-// 4. CARRINHO DE COMPRAS
+// 4. LÓGICA DO MODAL (FRENTE/VERSO)
+// ==========================================
+window.openModal = (id) => {
+    const product = allProductsData.find(p => p.id === id);
+    if (!product) return;
+
+    // Preenche informações
+    document.getElementById('modalTitle').innerText = product.name;
+    document.getElementById('modalPrice').innerText = `R$ ${product.price.toFixed(2)}`;
+    document.getElementById('modalDesc').innerText = product.description || "Sem descrição disponível.";
+
+    // Configura Botão de Adicionar do Modal
+    const btnAdd = document.getElementById('modalAddBtn');
+    btnAdd.onclick = () => {
+        addToCart(product.id, product.name, product.price);
+        closeModal();
+    };
+
+    // === IMAGENS ===
+    const mainImg = document.getElementById('modalMainImg');
+    const thumbsContainer = document.getElementById('modalThumbs');
+
+    // Imagem principal inicial (Frente)
+    mainImg.src = product.image;
+    thumbsContainer.innerHTML = ""; // Limpa thumbs
+
+    // Se tiver imagem de COSTAS (verifica se o campo existe e tem link)
+    if (product.imageBack && product.imageBack.length > 5) {
+        // Thumb Frente
+        thumbsContainer.innerHTML += `
+            <img src="${product.image}" class="thumb-img active" onclick="switchModalImage(this, '${product.image}')" title="Frente">
+        `;
+        // Thumb Costas
+        thumbsContainer.innerHTML += `
+            <img src="${product.imageBack}" class="thumb-img" onclick="switchModalImage(this, '${product.imageBack}')" title="Costas">
+        `;
+    }
+
+    // Mostra o modal (Flex para centralizar)
+    document.getElementById('productModal').style.display = "flex";
+};
+
+window.closeModal = () => {
+    document.getElementById('productModal').style.display = "none";
+};
+
+window.switchModalImage = (thumb, src) => {
+    document.getElementById('modalMainImg').src = src;
+    document.querySelectorAll('.thumb-img').forEach(img => img.classList.remove('active'));
+    thumb.classList.add('active');
+};
+
+// Fecha ao clicar fora
+window.onclick = (event) => {
+    const modal = document.getElementById('productModal');
+    if (event.target === modal) closeModal();
+};
+
+// ==========================================
+// 5. CARRINHO DE COMPRAS
 // ==========================================
 window.addToCart = (id, name, price) => {
     const existingItem = cart.find(item => item.id === id);
-
     if (existingItem) {
         existingItem.qty += 1;
     } else {
         cart.push({ id, name, price, qty: 1 });
     }
-
     updateCartUI();
 };
 
@@ -135,7 +193,6 @@ function updateCartUI() {
     } else {
         cart.forEach((item, index) => {
             total += item.price * item.qty;
-
             const itemEl = document.createElement('div');
             itemEl.className = 'cart-item';
             itemEl.innerHTML = `
@@ -155,7 +212,7 @@ function updateCartUI() {
 }
 
 // ==========================================
-// 5. FINALIZAR COMPRA
+// 6. FINALIZAR COMPRA
 // ==========================================
 if (checkoutBtn) {
     checkoutBtn.addEventListener('click', () => {
@@ -180,7 +237,7 @@ if (checkoutBtn) {
         message += `\n💰 *VALOR TOTAL: R$ ${total}*`;
         message += `\n\n_Aguardo instruções de pagamento._`;
 
-        const phone = "5584999999999"; // SEU NÚMERO AQUI
+        const phone = "5584999999999";
         const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
         window.open(url, '_blank');
