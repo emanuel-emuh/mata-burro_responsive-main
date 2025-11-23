@@ -1,92 +1,105 @@
-import { auth } from './firebase-config.js';
-// ADICIONADO: signInWithEmailAndPassword na importação
+import { auth, db } from './firebase-config.js'; // ADICIONADO: db
 import { onAuthStateChanged, signOut, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js"; // ADICIONADO: ferramentas do Firestore
 
-// 1. Seleciona os elementos da página
 const loginBtn = document.getElementById('navLoginBtn');
 const buyButtons = document.querySelectorAll('.buy-btn, .buy-button');
-const loginForm = document.getElementById('loginForm'); // ADICIONADO
+const loginForm = document.getElementById('loginForm');
 
-// 2. Lógica de Login (ESTA PARTE FALTAVA)
+// LÓGICA DE LOGIN COMPLETA
 if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // Impede a página de recarregar
+    loginForm.addEventListener('submit', async(e) => { // Note o 'async' aqui
+        e.preventDefault();
 
         const email = document.getElementById('emailInput').value;
         const password = document.getElementById('passwordInput').value;
         const btn = loginForm.querySelector('button');
         const originalText = btn.innerText;
 
-        // Feedback visual
-        btn.innerText = "Entrando...";
+        btn.innerText = "Verificando...";
         btn.disabled = true;
 
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Sucesso
-                console.log("Logado com sucesso!");
-                window.location.href = "index.html"; // Redireciona para a home
-            })
-            .catch((error) => {
-                // Erro
-                console.error("Erro ao logar:", error);
-                btn.innerText = originalText;
-                btn.disabled = false;
+        try {
+            // 1. O Authentication verifica a senha
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
 
-                alert("Erro ao entrar: Verifique o e-mail e a senha.");
-            });
+            console.log("Senha correta. Buscando dados no Firestore...");
+
+            // 2. AGORA sim, vamos ao seu Banco de Dados (Firestore)
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const userData = docSnap.data();
+                console.log("Dados do Firestore:", userData);
+
+                // Exemplo: Se for Admin, manda para a página de Admin
+                if (userData.role === 'admin') {
+                    window.location.href = "admin.html";
+                } else {
+                    window.location.href = "index.html";
+                }
+            } else {
+                // Usuário existe no Auth mas não tem documento no Firestore (caso raro)
+                console.log("Usuário sem registro no banco!");
+                window.location.href = "index.html";
+            }
+
+        } catch (error) {
+            console.error("Erro:", error);
+            btn.innerText = originalText;
+            btn.disabled = false;
+
+            if (error.code === 'auth/invalid-credential') {
+                alert("E-mail ou senha incorretos.");
+            } else {
+                alert("Erro ao entrar: " + error.message);
+            }
+        }
     });
 }
 
-// 3. Monitora se o usuário entrou ou saiu (MANTÉM O QUE JÁ TINHAS)
+// ... (O resto do código onAuthStateChanged mantém igual) ...
+// Apenas certifique-se de manter a função onAuthStateChanged e logoutUser abaixo disto
 onAuthStateChanged(auth, (user) => {
+    // ... seu código de UI ...
+    // (Copie do exemplo anterior a parte do onAuthStateChanged)
     if (user) {
-        // ... (todo o teu código de UI para user logado mantém-se igual) ...
-        console.log("Usuário logado:", user.email);
-
-        let userName = user.displayName;
-        if (!userName) {
-            userName = user.email.split('@')[0];
-            userName = userName.charAt(0).toUpperCase() + userName.slice(1);
-        }
-
+        // Lógica de usuário logado
         if (loginBtn) {
-            loginBtn.innerHTML = `<i class="fas fa-user-circle" style="margin-right: 5px;"></i> ${userName}`;
-            loginBtn.href = "#";
-            loginBtn.title = "Clique para Sair";
+            // Tenta pegar o nome do Auth, se não tiver, tenta do email
+            let userName = user.displayName;
+            if (!userName) {
+                userName = user.email.split('@')[0];
+            }
 
+            loginBtn.innerHTML = `<i class="fas fa-user-circle"></i> ${userName}`;
+            loginBtn.href = "#";
             loginBtn.onclick = (e) => {
                 e.preventDefault();
-                if (confirm(`Olá, ${userName}!\nDeseja sair da sua conta?`)) {
-                    logoutUser();
-                }
-            };
+                if (confirm("Deseja sair?")) logoutUser();
+            }
         }
-
+        // Libera botões
         buyButtons.forEach(btn => {
             btn.style.opacity = "1";
             btn.style.cursor = "pointer";
             btn.onclick = null;
         });
-
     } else {
-        // ... (código de visitante mantém-se igual) ...
+        // Lógica de visitante
         if (loginBtn) {
             loginBtn.innerHTML = 'Login';
             loginBtn.href = "login.html";
             loginBtn.onclick = null;
         }
-
-        // Bloqueio dos botões de compra...
+        // Bloqueia botões...
     }
 });
 
-// Função para deslogar
 function logoutUser() {
     signOut(auth).then(() => {
-        // Se estiver na página de admin ou perfil, talvez queira redirecionar
         window.location.href = "index.html";
-    }).catch((error) => {
-        console.error("Erro ao sair:", error);
     });
 }
