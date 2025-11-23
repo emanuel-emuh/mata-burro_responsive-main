@@ -95,7 +95,7 @@ window.deleteProduct = async(id, name) => {
 };
 
 // ==========================================
-// 4. SALVAR NOVO PRODUTO (Com Categoria e Foto Costas)
+// 4. SALVAR NOVO PRODUTO (ATUALIZADO)
 // ==========================================
 if (productForm) {
     productForm.addEventListener('submit', async(e) => {
@@ -105,7 +105,6 @@ if (productForm) {
         const price = parseFloat(document.getElementById('prodPrice').value);
         const category = document.getElementById('prodCategory').value;
         const image = document.getElementById('prodImage').value;
-        // NOVO: Pega a imagem das costas
         const imageBack = document.getElementById('prodImageBack').value;
         const description = document.getElementById('prodDesc').value;
 
@@ -121,7 +120,7 @@ if (productForm) {
                 price: price,
                 category: category,
                 image: image,
-                imageBack: imageBack, // SALVA NO BANCO
+                imageBack: imageBack, // Salva a imagem das costas
                 description: description,
                 createdAt: new Date()
             });
@@ -129,7 +128,13 @@ if (productForm) {
             alert("✅ Produto cadastrado!");
 
             productForm.reset();
+
+            // === CORREÇÃO AQUI ===
+            // Limpa AS DUAS caixas de preview
             document.getElementById('previewBox').classList.remove('active');
+            const previewBack = document.getElementById('previewBoxBack');
+            if (previewBack) previewBack.classList.remove('active');
+
             loadAdminProducts();
 
         } catch (error) {

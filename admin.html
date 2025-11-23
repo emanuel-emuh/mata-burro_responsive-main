@@ -8,11 +8,10 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* === ESTILOS ESPECÍFICOS DA PÁGINA ADMIN === */
+        /* === ESTILOS DO ADMIN === */
         
         body {
             background-color: var(--dark-bg);
@@ -20,7 +19,6 @@
             display: flex;
             flex-direction: column;
         }
-        /* Navbar ajustada */
         
         header {
             padding: 10px 5% !important;
@@ -36,7 +34,6 @@
         .logo-text {
             font-size: 1.5rem !important;
         }
-        /* Wrapper Principal */
         
         .admin-wrapper {
             flex: 1;
@@ -46,7 +43,6 @@
             padding: 120px 20px 60px;
             gap: 40px;
         }
-        /* === 1. CARTÃO DO FORMULÁRIO === */
         
         .admin-card {
             width: 100%;
@@ -89,16 +85,14 @@
             padding: 12px 15px;
             border-radius: 8px;
             font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
             transition: 0.3s;
         }
         
         .input-field:focus {
             border-color: var(--orange-primary);
-            box-shadow: 0 0 15px rgba(255, 140, 0, 0.2);
             outline: none;
         }
-        /* Preview da Imagem */
+        /* Preview das Imagens */
         
         .preview-container {
             margin-top: 10px;
@@ -122,7 +116,6 @@
             object-fit: contain;
             border-radius: 5px;
         }
-        /* Botão Salvar */
         
         .submit-btn {
             width: 100%;
@@ -135,7 +128,7 @@
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: 0.2s;
             font-family: 'Oxanium', cursive;
             text-transform: uppercase;
         }
@@ -150,7 +143,7 @@
             cursor: not-allowed;
             transform: none;
         }
-        /* === 2. LISTA DE PRODUTOS === */
+        /* Lista de Produtos */
         
         .products-list-section {
             width: 100%;
@@ -166,12 +159,6 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: 0.3s;
-        }
-        
-        .admin-product-item:hover {
-            border-color: var(--orange-primary);
-            background: #2a2a2a;
         }
         
         .prod-info {
@@ -191,7 +178,7 @@
         .prod-details h4 {
             color: #fff;
             margin-bottom: 3px;
-            font-family: 'Oxanium', cursive;
+            font-family: 'Oxanium';
             font-size: 1rem;
         }
         
@@ -217,14 +204,11 @@
             border-radius: 5px;
             cursor: pointer;
             transition: 0.3s;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.85rem;
         }
         
         .delete-btn:hover {
             background: #ff4444;
             color: #fff;
-            box-shadow: 0 0 10px rgba(255, 68, 68, 0.3);
         }
     </style>
 </head>
@@ -245,7 +229,6 @@
     </header>
 
     <div class="admin-wrapper">
-
         <div class="admin-card">
             <h2><i class="fas fa-plus-circle"></i> Novo Produto</h2>
 
@@ -272,15 +255,20 @@
 
                 <div class="form-group">
                     <label for="prodImage">Link da Imagem (Frente)</label>
-                    <input type="text" id="prodImage" class="input-field" placeholder="Cole o link ou use 'img/foto.png'" required oninput="previewImage(this.value)">
+                    <input type="text" id="prodImage" class="input-field" placeholder="Cole o link..." required oninput="previewImage(this.value, 'previewBox', 'imgPreview')">
+
                     <div class="preview-container" id="previewBox">
-                        <img id="imgPreview" class="preview-img" alt="Preview">
+                        <img id="imgPreview" class="preview-img">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="prodImageBack" style="color: var(--orange-primary);">Link da Imagem (Costas - Opcional)</label>
-                    <input type="text" id="prodImageBack" class="input-field" placeholder="Apenas se for camisa com verso...">
+                    <label for="prodImageBack" style="color: var(--orange-primary);">Link da Imagem 2 (Opcional)</label>
+                    <input type="text" id="prodImageBack" class="input-field" placeholder="Apenas se for camisa com verso..." oninput="previewImage(this.value, 'previewBoxBack', 'imgPreviewBack')">
+
+                    <div class="preview-container" id="previewBoxBack">
+                        <img id="imgPreviewBack" class="preview-img">
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -302,13 +290,13 @@
                 <p style="color: #777; text-align: center;">Carregando lista...</p>
             </div>
         </div>
-
     </div>
 
     <script>
-        function previewImage(url) {
-            const box = document.getElementById('previewBox');
-            const img = document.getElementById('imgPreview');
+        // Agora a função aceita os IDs específicos como parâmetro
+        function previewImage(url, boxId, imgId) {
+            const box = document.getElementById(boxId);
+            const img = document.getElementById(imgId);
 
             if (url.length > 5) {
                 img.src = url;
