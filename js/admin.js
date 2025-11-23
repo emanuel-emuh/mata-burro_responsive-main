@@ -99,7 +99,7 @@ window.deleteProduct = async(id, name) => {
 };
 
 // ==========================================
-// 4. SALVAR NOVO PRODUTO
+// 4. SALVAR NOVO PRODUTO (Com Categoria)
 // ==========================================
 if (productForm) {
     productForm.addEventListener('submit', async(e) => {
@@ -107,6 +107,8 @@ if (productForm) {
 
         const name = document.getElementById('prodName').value;
         const price = parseFloat(document.getElementById('prodPrice').value);
+        // PEGA A CATEGORIA SELECIONADA
+        const category = document.getElementById('prodCategory').value;
         const image = document.getElementById('prodImage').value;
         const description = document.getElementById('prodDesc').value;
         const btn = productForm.querySelector('button');
@@ -119,6 +121,7 @@ if (productForm) {
             await addDoc(collection(db, "products"), {
                 name: name,
                 price: price,
+                category: category, // SALVA NO BANCO
                 image: image,
                 description: description,
                 createdAt: new Date()
@@ -126,11 +129,8 @@ if (productForm) {
 
             alert("✅ Produto cadastrado!");
 
-            // Reseta o formulário e esconde o preview
             productForm.reset();
             document.getElementById('previewBox').classList.remove('active');
-
-            // Atualiza a lista para mostrar o novo item
             loadAdminProducts();
 
         } catch (error) {

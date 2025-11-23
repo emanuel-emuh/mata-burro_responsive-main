@@ -5,66 +5,115 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loja Oficial - Mata-Burro</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Oxaniu:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
+
     <style>
-        /* Estilos Específicos da Loja */
+        /* === ESTILOS ESPECÍFICOS DA LOJA === */
         
         .shop-container {
             display: flex;
             padding: 120px 5% 50px;
             gap: 30px;
             min-height: 100vh;
+            align-items: flex-start;
+        }
+        /* Área Principal (Filtros + Produtos) */
+        
+        .products-section {
+            flex: 3;
+        }
+        /* === 1. FILTROS (Categorias) === */
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
         }
         
+        .filter-btn {
+            background: #222;
+            border: 1px solid #444;
+            color: #ccc;
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Oxanium', cursive;
+            font-weight: 600;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--orange-primary);
+            color: #fff;
+        }
+        
+        .filter-btn.active {
+            background: var(--orange-primary);
+            color: #1a1a1a;
+            border-color: var(--orange-primary);
+            box-shadow: 0 0 15px rgba(255, 140, 0, 0.4);
+        }
+        /* === 2. GRID DE PRODUTOS === */
+        
         .products-grid {
-            flex: 3;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 25px;
         }
-        /* Card do Produto */
         
         .shop-card {
             background: #222;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
             border: 1px solid #333;
             transition: 0.3s;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
         
         .shop-card:hover {
             transform: translateY(-5px);
             border-color: var(--orange-primary);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
         }
         
         .shop-img {
             width: 100%;
             height: 250px;
             object-fit: cover;
+            border-bottom: 1px solid #333;
         }
         
         .shop-info {
-            padding: 15px;
-            flex-grow: 1;
+            padding: 20px;
             display: flex;
             flex-direction: column;
+            flex-grow: 1;
         }
         
         .shop-title {
             color: #fff;
             font-size: 1.1rem;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-family: 'Oxanium', cursive;
+            line-height: 1.4;
         }
         
         .shop-price {
             color: var(--orange-primary);
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         
         .add-cart-btn {
@@ -72,78 +121,122 @@
             background: transparent;
             border: 2px solid var(--orange-primary);
             color: var(--orange-primary);
-            padding: 8px;
+            padding: 10px;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 8px;
             font-weight: bold;
             transition: 0.3s;
+            text-transform: uppercase;
+            font-family: 'Oxanium', cursive;
         }
         
         .add-cart-btn:hover {
             background: var(--orange-primary);
-            color: #000;
+            color: #1a1a1a;
         }
-        /* Carrinho Lateral */
+        /* === 3. CARRINHO LATERAL === */
         
         .cart-sidebar {
             flex: 1;
             background: #1a1a1a;
             border: 1px solid var(--orange-primary);
-            border-radius: 10px;
-            padding: 20px;
-            height: fit-content;
+            border-radius: 15px;
+            padding: 25px;
             position: sticky;
             top: 100px;
+            /* Fica fixo ao rolar */
             min-width: 300px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
         }
         
         .cart-header {
             border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            color: var(--orange-primary);
+            font-family: 'Oxanium', cursive;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .cart-items {
             max-height: 400px;
             overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        /* Scrollbar personalizada pro carrinho */
+        
+        .cart-items::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        .cart-items::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 5px;
         }
         
         .cart-item {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            background: #252525;
+            padding: 10px;
+            border-radius: 8px;
             margin-bottom: 10px;
+            border: 1px solid #333;
             font-size: 0.9rem;
-            border-bottom: 1px solid #333;
-            padding-bottom: 5px;
+        }
+        
+        .remove-item {
+            color: #ff4444;
+            cursor: pointer;
+            padding: 5px;
+            transition: 0.2s;
+        }
+        
+        .remove-item:hover {
+            transform: scale(1.2);
         }
         
         .cart-total {
-            margin-top: 20px;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: bold;
             text-align: right;
-            color: var(--orange-primary);
+            color: #fff;
+            border-top: 1px solid #333;
+            padding-top: 15px;
+            margin-bottom: 15px;
         }
         
         .checkout-btn {
             width: 100%;
-            margin-top: 15px;
-            text-align: center;
-        }
-        
-        .remove-item {
-            color: red;
+            background: linear-gradient(to right, #25D366, #128C7E);
+            /* Cor WhatsApp */
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 50px;
+            font-weight: bold;
             cursor: pointer;
-            margin-left: 10px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-family: 'Oxanium';
         }
         
-        @media (max-width: 768px) {
+        .checkout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+        /* Responsividade */
+        
+        @media (max-width: 900px) {
             .shop-container {
                 flex-direction: column;
             }
             .cart-sidebar {
-                position: static;
                 width: 100%;
+                position: static;
             }
         }
     </style>
@@ -152,7 +245,14 @@
 <body>
     <header>
         <nav class="navbar">
-            <div class="logo">Mata-Burro Store</div>
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none; display: flex; align-items: center;">
+                    <div class="logo-icon">
+                        <img src="img/1758081673451.jpg" alt="Logo">
+                    </div>
+                    <div class="logo-text">Mata-Burro Store</div>
+                </a>
+            </div>
             <ul class="nav-links">
                 <li><a href="index.html">Início</a></li>
             </ul>
@@ -161,27 +261,40 @@
     </header>
 
     <div class="shop-container">
-        <!-- Lista de Produtos (Vem do Firebase) -->
-        <div class="products-grid" id="productsGrid">
-            <p style="color: #fff;">Carregando produtos...</p>
+
+        <div class="products-section">
+
+            <div class="filters">
+                <button class="filter-btn active" onclick="filterProducts('todos')">Todos</button>
+                <button class="filter-btn" onclick="filterProducts('camisas')">Camisas</button>
+                <button class="filter-btn" onclick="filterProducts('acessorios')">Acessórios</button>
+                <button class="filter-btn" onclick="filterProducts('eletronicos')">Eletrônicos</button>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <p style="color: #fff; font-size: 1.1rem;">Carregando catálogo...</p>
+            </div>
         </div>
 
-        <!-- Carrinho de Compras -->
         <div class="cart-sidebar">
             <div class="cart-header">
                 <h3><i class="fas fa-shopping-cart"></i> Seu Carrinho</h3>
             </div>
+
             <div class="cart-items" id="cartItems">
-                <p style="color: #777; text-align: center;">Carrinho vazio</p>
+                <p style="color: #777; text-align: center; padding: 20px;">Carrinho vazio</p>
             </div>
+
             <div class="cart-total">
-                Total: R$ <span id="cartTotal">0.00</span>
+                Total: <span style="color: var(--orange-primary);">R$ <span id="cartTotal">0.00</span></span>
             </div>
-            <button id="checkoutBtn" class="cta-button checkout-btn">Finalizar Compra (WhatsApp)</button>
+
+            <button id="checkoutBtn" class="checkout-btn">
+                <i class="fab fa-whatsapp"></i> Finalizar Compra
+            </button>
         </div>
     </div>
 
-    <!-- Importante: check-login para mostrar nome e store.js para a loja -->
     <script type="module" src="js/check-login.js"></script>
     <script type="module" src="js/store.js"></script>
 </body>
