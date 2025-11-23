@@ -5,92 +5,157 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Admin - Mata-Burro</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Oxaniu:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* === CORREÇÕES DE LAYOUT === */
+        /* === AJUSTES ESPECÍFICOS DA PÁGINA ADMIN === */
         
         body {
             background-color: var(--dark-bg);
+            /* Fundo escuro padrão */
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        /* Força a navbar a ficar compacta no Admin */
+        /* Ajuste da Navbar para não ficar gigante no Admin */
         
         header {
             padding: 10px 5% !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
         
         .logo-icon img {
-            height: 60px !important;
+            height: 50px !important;
+            /* Força o logo a ser menor aqui */
             width: auto;
         }
         
         .logo-text {
             font-size: 1.5rem !important;
         }
-        /* Container do Admin */
+        /* Container Principal Centralizado */
         
-        .admin-container {
-            max-width: 600px;
-            margin: 120px auto 50px;
-            /* Espaço para não ficar atrás do menu */
-            padding: 40px;
-            background: linear-gradient(145deg, #222, #1a1a1a);
-            border-radius: 20px;
-            border: 1px solid var(--orange-primary);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-            position: relative;
-            z-index: 1;
+        .admin-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 140px 20px 60px;
+            /* Margem topo para não bater no menu */
         }
+        /* Cartão do Formulário (Estilo "Glassmorphism" Dark) */
         
-        h2 {
-            text-align: center;
+        .admin-card {
+            width: 100%;
+            max-width: 600px;
+            background: linear-gradient(145deg, #222, #1a1a1a);
+            border: 1px solid var(--orange-primary);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 40px rgba(255, 140, 0, 0.15);
+            position: relative;
+        }
+        /* Título */
+        
+        .admin-card h2 {
             color: var(--orange-primary);
+            text-align: center;
             margin-bottom: 30px;
             text-transform: uppercase;
-            font-family: 'Oxanium', cursive;
+            letter-spacing: 2px;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
         }
+        /* Campos do Formulário */
         
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         
         .form-group label {
             display: block;
-            color: #ccc;
-            margin-bottom: 10px;
+            color: #bbb;
+            margin-bottom: 8px;
             font-family: 'Oxanium', cursive;
             font-weight: 600;
+            font-size: 0.95rem;
         }
         
-        .form-group input,
-        .form-group textarea {
+        .input-field {
             width: 100%;
-            padding: 15px;
-            background: #0f0f0f;
-            border: 1px solid #333;
+            background: #111;
+            border: 1px solid #444;
             color: #fff;
-            border-radius: 10px;
-            outline: none;
-            transition: 0.3s;
+            padding: 12px 15px;
+            border-radius: 8px;
             font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: 0.3s;
         }
         
-        .form-group input:focus,
-        .form-group textarea:focus {
+        .input-field:focus {
             border-color: var(--orange-primary);
-            box-shadow: 0 0 10px rgba(255, 140, 0, 0.2);
+            box-shadow: 0 0 15px rgba(255, 140, 0, 0.2);
+            outline: none;
+        }
+        /* Pré-visualização da Imagem */
+        
+        .preview-container {
+            margin-top: 10px;
+            height: 0;
+            /* Escondido por padrão */
+            overflow: hidden;
+            transition: height 0.3s ease;
+            text-align: center;
+            background: #151515;
+            border-radius: 8px;
+        }
+        
+        .preview-container.active {
+            height: 220px;
+            /* Abre quando tem imagem */
+            border: 1px dashed #444;
+            padding: 10px;
         }
         
         .preview-img {
+            height: 100%;
             max-width: 100%;
-            max-height: 200px;
-            margin-top: 10px;
-            border-radius: 10px;
-            display: none;
-            border: 2px solid var(--orange-primary);
+            object-fit: contain;
+            border-radius: 5px;
+        }
+        /* Botão Salvar */
+        
+        .submit-btn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            font-size: 1.1rem;
+            background: linear-gradient(to right, var(--orange-primary), var(--orange-dark));
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: 'Oxanium', cursive;
+            text-transform: uppercase;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 140, 0, 0.3);
+        }
+        
+        .submit-btn:disabled {
+            background: #444;
+            cursor: not-allowed;
+            transform: none;
         }
     </style>
 </head>
@@ -100,57 +165,67 @@
         <nav class="navbar">
             <div class="logo">
                 <div class="logo-icon">
-                    <img src="img/1758081673451.jpg" alt="Logo">
+                    <img src="img/1758081673451.jpg" alt="Logo Mata-Burro">
                 </div>
                 <div class="logo-text">Painel Admin</div>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html">Voltar ao Site</a></li>
+                <li><a href="index.html"><i class="fas fa-arrow-left"></i> Voltar ao Site</a></li>
             </ul>
         </nav>
     </header>
 
-    <section class="admin-container">
-        <h2>Adicionar Novo Produto</h2>
-        <form id="productForm">
-            <div class="form-group">
-                <label for="prodName">Nome do Produto</label>
-                <input type="text" id="prodName" required placeholder="Ex: Camisa Oficial 2025">
-            </div>
+    <div class="admin-wrapper">
+        <div class="admin-card">
+            <h2><i class="fas fa-plus-circle"></i> Novo Produto</h2>
 
-            <div class="form-group">
-                <label for="prodPrice">Preço (R$)</label>
-                <input type="number" id="prodPrice" step="0.01" required placeholder="Ex: 149.90">
-            </div>
+            <form id="productForm">
+                <div class="form-group">
+                    <label for="prodName">Nome do Produto</label>
+                    <input type="text" id="prodName" class="input-field" placeholder="Ex: Camisa Oficial 2025" required>
+                </div>
 
-            <div class="form-group">
-                <label for="prodImage">URL da Imagem (Link)</label>
-                <input type="url" id="prodImage" required placeholder="https://exemplo.com/imagem.png" onchange="previewImage(this)">
-                <img id="imgPreview" class="preview-img">
-            </div>
+                <div class="form-group">
+                    <label for="prodPrice">Preço (R$)</label>
+                    <input type="number" id="prodPrice" class="input-field" step="0.01" placeholder="Ex: 149.90" required>
+                </div>
 
-            <div class="form-group">
-                <label for="prodDesc">Descrição</label>
-                <textarea id="prodDesc" rows="4" placeholder="Detalhes do produto..."></textarea>
-            </div>
+                <div class="form-group">
+                    <label for="prodImage">Link da Imagem / Caminho</label>
+                    <input type="text" id="prodImage" class="input-field" placeholder="Cole o link ou use 'img/foto.png'" required oninput="previewImage(this.value)">
 
-            <button type="submit" class="cta-button" style="width: 100%;">Salvar Produto</button>
-        </form>
-    </section>
+                    <div class="preview-container" id="previewBox">
+                        <img id="imgPreview" class="preview-img" alt="Pré-visualização">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="prodDesc">Descrição Detalhada</label>
+                    <textarea id="prodDesc" class="input-field" rows="4" placeholder="Detalhes do material, tamanhos, etc..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-save"></i> Salvar Produto
+                </button>
+            </form>
+        </div>
+    </div>
 
     <script>
-        function previewImage(input) {
+        function previewImage(url) {
+            const box = document.getElementById('previewBox');
             const img = document.getElementById('imgPreview');
-            if (input.value) {
-                img.src = input.value;
-                img.style.display = 'block';
-                // Caso o link esteja quebrado
+
+            if (url.length > 5) {
+                img.src = url;
+                img.onload = function() {
+                    box.classList.add('active'); // Mostra a caixa se a imagem carregar
+                }
                 img.onerror = function() {
-                    this.style.display = 'none';
-                    alert('Link de imagem inválido ou inacessível.');
-                };
+                    box.classList.remove('active'); // Esconde se der erro
+                }
             } else {
-                img.style.display = 'none';
+                box.classList.remove('active');
             }
         }
     </script>
