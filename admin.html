@@ -10,20 +10,35 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* === CORREÇÃO DO LAYOUT DO ADMIN === */
+        /* === CORREÇÕES VISUAIS === */
         
         body {
-            /* Garante que o fundo seja escuro */
             background-color: var(--dark-bg);
             min-height: 100vh;
         }
+        /* Força a barra de navegação a ser mais compacta nesta página */
+        
+        header {
+            padding: 10px 5% !important;
+        }
+        /* Reduz o tamanho do logo para não estourar a barra */
+        
+        .logo-icon img {
+            height: 60px !important;
+            /* Estava 100px no style.css global */
+            width: auto;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem !important;
+        }
+        /* Container do Admin */
         
         .admin-container {
             max-width: 600px;
-            /* Margem grande no topo para não ficar atrás da navbar fixa */
-            margin: 140px auto 50px;
+            /* Margem ajustada para ficar logo abaixo da barra corrigida */
+            margin: 120px auto 50px;
             padding: 40px;
-            /* Fundo sólido para destacar o formulário */
             background: linear-gradient(145deg, #222, #1a1a1a);
             border-radius: 20px;
             border: 1px solid var(--orange-primary);
@@ -59,7 +74,6 @@
             width: 100%;
             padding: 15px;
             background: #0f0f0f;
-            /* Fundo bem escuro */
             border: 1px solid #333;
             color: #fff;
             border-radius: 10px;
@@ -74,7 +88,7 @@
             border-color: var(--orange-primary);
             box-shadow: 0 0 10px rgba(255, 140, 0, 0.2);
         }
-        /* === ESTILO DO INPUT DE ARQUIVO (NOVO) === */
+        /* Estilo do Input de Arquivo */
         
         input[type="file"] {
             width: 100%;
@@ -85,7 +99,7 @@
             border: 1px dashed #555;
             cursor: pointer;
         }
-        /* Área de Pré-visualização da Imagem */
+        /* Área de Pré-visualização */
         
         .preview-box {
             margin-top: 15px;
@@ -101,7 +115,6 @@
             max-height: 250px;
             border-radius: 10px;
             display: none;
-            /* Só aparece quando selecionar imagem */
             border: 2px solid var(--orange-primary);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
@@ -128,12 +141,12 @@
 
         <form id="productForm">
             <div class="form-group">
-                <label>Nome do Produto</label>
+                <label for="prodName">Nome do Produto</label>
                 <input type="text" id="prodName" required placeholder="Ex: Camisa Oficial 2025">
             </div>
 
             <div class="form-group">
-                <label>Preço (R$)</label>
+                <label for="prodPrice">Preço (R$)</label>
                 <input type="number" id="prodPrice" step="0.01" required placeholder="Ex: 149.90">
             </div>
 
@@ -147,7 +160,7 @@
             </div>
 
             <div class="form-group">
-                <label>Descrição</label>
+                <label for="prodDesc">Descrição</label>
                 <textarea id="prodDesc" rows="4" placeholder="Detalhes do produto..."></textarea>
             </div>
 
