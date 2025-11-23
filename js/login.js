@@ -20,7 +20,7 @@ if (loginForm) {
         const originalText = btn.innerText;
 
         // Feedback visual para o usuário
-        btn.innerText = "Verificando permissões...";
+        btn.innerText = "Entrando...";
         btn.disabled = true;
 
         try {
