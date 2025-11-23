@@ -9,65 +9,68 @@ const checkoutBtn = document.getElementById('checkoutBtn');
 
 // Estado da Aplicação
 let cart = [];
-let allProductsData = []; // Guarda todos os produtos carregados do banco
+let allProductsData = [];
 
 // ==========================================
 // 1. CARREGAR PRODUTOS (DO FIREBASE)
 // ==========================================
 async function loadProducts() {
     try {
-        if (productsGrid) productsGrid.innerHTML = "<p style='color:#fff'>Carregando produtos...</p>";
+        if (productsGrid) productsGrid.innerHTML = "<p style='color:#fff'>A carregar produtos...</p>";
 
         const querySnapshot = await getDocs(collection(db, "products"));
 
-        // Limpa a lista da memória
         allProductsData = [];
 
         if (querySnapshot.empty) {
-            productsGrid.innerHTML = "<p style='color:#ccc'>Nenhum produto cadastrado na loja.</p>";
+            productsGrid.innerHTML = "<p style='color:#ccc'>Nenhum produto cadastrado.</p>";
             return;
         }
 
-        // Salva os dados na nossa variável local
         querySnapshot.forEach((doc) => {
             const p = doc.data();
-            p.id = doc.id; // Importante guardar o ID
+            p.id = doc.id;
             allProductsData.push(p);
         });
 
-        // Ao carregar, mostra TODOS os produtos
         renderProducts(allProductsData);
 
     } catch (error) {
-        console.error("Erro ao carregar produtos:", error);
-        if (productsGrid) productsGrid.innerHTML = "<p style='color:red'>Erro de conexão com a loja.</p>";
+        console.error("Erro ao carregar:", error);
+        if (productsGrid) productsGrid.innerHTML = "<p style='color:red'>Erro de conexão.</p>";
     }
 }
 
 // ==========================================
-// 2. RENDERIZAR PRODUTOS (DESENHAR NA TELA)
+// 2. RENDERIZAR PRODUTOS (A CORREÇÃO ESTÁ AQUI)
 // ==========================================
 function renderProducts(listaDeProdutos) {
-    // Limpa o grid atual
     productsGrid.innerHTML = "";
 
     if (listaDeProdutos.length === 0) {
-        productsGrid.innerHTML = "<p style='color:#ccc; padding: 20px;'>Nenhum produto encontrado nesta categoria.</p>";
+        productsGrid.innerHTML = "<p style='color:#ccc; padding: 20px;'>Nenhum produto encontrado.</p>";
         return;
     }
 
     listaDeProdutos.forEach(product => {
-        // Usa a URL da imagem ou um placeholder se não tiver
         const imgUrl = product.image || 'img/logo.png';
 
         const card = document.createElement('div');
         card.className = 'shop-card';
+
+        // --- AQUI ESTAVA O PROBLEMA ---
+        // Atualizei as classes para baterem com o novo loja.html:
+        // 1. Envolvi a img em 'card-img-container'
+        // 2. Troquei 'shop-info' por 'card-body'
+        // 3. Troquei 'add-cart-btn' por 'add-btn'
         card.innerHTML = `
-            <img src="${imgUrl}" alt="${product.name}" class="shop-img" onerror="this.src='https://via.placeholder.com/300?text=Imagem+Indisponível'">
-            <div class="shop-info">
+            <div class="card-img-container">
+                <img src="${imgUrl}" alt="${product.name}" class="shop-img" onerror="this.src='https://via.placeholder.com/300?text=Sem+Imagem'">
+            </div>
+            <div class="card-body">
                 <h3 class="shop-title">${product.name}</h3>
                 <p class="shop-price">R$ ${product.price.toFixed(2)}</p>
-                <button class="add-cart-btn" onclick="addToCart('${product.id}', '${product.name}', ${product.price})">
+                <button class="add-btn" onclick="addToCart('${product.id}', '${product.name}', ${product.price})">
                     <i class="fas fa-cart-plus"></i> Adicionar
                 </button>
             </div>
@@ -77,17 +80,13 @@ function renderProducts(listaDeProdutos) {
 }
 
 // ==========================================
-// 3. FILTRAR PRODUTOS (POR CATEGORIA)
+// 3. FILTRAR PRODUTOS
 // ==========================================
-// Adicionamos ao 'window' para os botões do HTML conseguirem chamar
 window.filterProducts = (categoria) => {
-    // A. Atualiza o visual dos botões (Classe 'active')
     const botoes = document.querySelectorAll('.filter-btn');
     botoes.forEach(btn => {
-        // Verifica se o texto do botão corresponde à categoria clicada
-        // Simplificação: compara textos em minúsculo ou trata o caso especial 'todos'
         const btnText = btn.innerText.toLowerCase();
-        // Remove acentos para comparar (ex: acessórios -> acessorios)
+        // Remove acentos (ex: acessórios -> acessorios)
         const btnNormalizado = btnText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
         if (btnNormalizado === categoria || (categoria === 'todos' && btnNormalizado === 'todos')) {
@@ -97,11 +96,9 @@ window.filterProducts = (categoria) => {
         }
     });
 
-    // B. Filtra os dados
     if (categoria === 'todos') {
         renderProducts(allProductsData);
     } else {
-        // Filtra onde product.category é igual à categoria clicada
         const filtrados = allProductsData.filter(p => p.category === categoria);
         renderProducts(filtrados);
     }
@@ -110,10 +107,7 @@ window.filterProducts = (categoria) => {
 // ==========================================
 // 4. CARRINHO DE COMPRAS
 // ==========================================
-
-// Adicionar Item
 window.addToCart = (id, name, price) => {
-    // Verifica se já existe
     const existingItem = cart.find(item => item.id === id);
 
     if (existingItem) {
@@ -123,17 +117,13 @@ window.addToCart = (id, name, price) => {
     }
 
     updateCartUI();
-    // Efeito visual rápido (opcional, pode ser removido)
-    // alert(`${name} adicionado!`); 
 };
 
-// Remover Item
 window.removeFromCart = (index) => {
     cart.splice(index, 1);
     updateCartUI();
 };
 
-// Atualizar Interface do Carrinho
 function updateCartUI() {
     if (!cartItemsContainer) return;
 
@@ -141,7 +131,7 @@ function updateCartUI() {
     let total = 0;
 
     if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p style="color: #777; text-align: center; margin-top: 20px;">Carrinho vazio</p>';
+        cartItemsContainer.innerHTML = '<p style="color: #666; text-align: center; margin-top: 20px;">Carrinho vazio</p>';
     } else {
         cart.forEach((item, index) => {
             total += item.price * item.qty;
@@ -149,46 +139,34 @@ function updateCartUI() {
             const itemEl = document.createElement('div');
             itemEl.className = 'cart-item';
             itemEl.innerHTML = `
-                <div>
-                    <strong style="color: #fff;">${item.name}</strong> <small style="color:#aaa">(${item.qty}x)</small><br>
-                    <span style="color:var(--orange-primary)">R$ ${(item.price * item.qty).toFixed(2)}</span>
+                <div class="item-info">
+                    <strong>${item.name}</strong>
+                    <small>Quant: ${item.qty}</small>
+                    <span class="item-price">R$ ${(item.price * item.qty).toFixed(2)}</span>
                 </div>
-                <i class="fas fa-trash remove-item" onclick="removeFromCart(${index})" title="Remover"></i>
+                <i class="fas fa-trash remove-btn" onclick="removeFromCart(${index})" title="Remover"></i>
             `;
             cartItemsContainer.appendChild(itemEl);
         });
     }
 
     if (cartTotalElement) cartTotalElement.innerText = total.toFixed(2);
-    // Salva no navegador para não perder ao atualizar a página
     localStorage.setItem('mataBurroCart', JSON.stringify(cart));
 }
 
 // ==========================================
-// 5. FINALIZAR COMPRA (WHATSAPP)
+// 5. FINALIZAR COMPRA
 // ==========================================
 if (checkoutBtn) {
     checkoutBtn.addEventListener('click', () => {
         if (cart.length === 0) return alert("Seu carrinho está vazio!");
 
         const user = auth.currentUser;
-
-        // Verifica se está logado (opcional, mas recomendado)
-        /*
-        if (!user) {
-            if(confirm("Você precisa estar logado para comprar. Ir para login?")) {
-                window.location.href = "login.html";
-            }
-            return;
-        }
-        */
-
         let clientName = "Visitante";
         if (user) {
             clientName = user.displayName || user.email;
         }
 
-        // Monta a mensagem
         let message = `*NOVO PEDIDO - MATA-BURRO STORE*\n`;
         message += `👤 Cliente: ${clientName}\n`;
         message += `📅 Data: ${new Date().toLocaleDateString()}\n\n`;
@@ -202,25 +180,19 @@ if (checkoutBtn) {
         message += `\n💰 *VALOR TOTAL: R$ ${total}*`;
         message += `\n\n_Aguardo instruções de pagamento._`;
 
-        // Envia para o WhatsApp
-        const phone = "5584999999999"; // COLOQUE SEU NÚMERO AQUI
+        const phone = "5584999999999"; // SEU NÚMERO AQUI
         const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
         window.open(url, '_blank');
     });
 }
 
-// ==========================================
-// 6. INICIALIZAÇÃO
-// ==========================================
+// Inicialização
 document.addEventListener('DOMContentLoaded', () => {
-    // Recupera carrinho salvo
     const savedCart = localStorage.getItem('mataBurroCart');
     if (savedCart) {
         cart = JSON.parse(savedCart);
         updateCartUI();
     }
-
-    // Carrega produtos
     loadProducts();
 });
