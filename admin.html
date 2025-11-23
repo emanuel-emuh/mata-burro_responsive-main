@@ -12,20 +12,20 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* === AJUSTES ESPECÍFICOS DA PÁGINA ADMIN === */
+        /* === ESTILOS ESPECÍFICOS DA PÁGINA ADMIN === */
         
         body {
             background-color: var(--dark-bg);
-            /* Fundo escuro padrão */
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
-        /* Ajuste da Navbar para não ficar gigante no Admin */
+        /* Ajuste da Navbar para não ocupar muito espaço no Admin */
         
         header {
             padding: 10px 5% !important;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            background: rgba(26, 26, 26, 0.95);
         }
         
         .logo-icon img {
@@ -37,17 +37,19 @@
         .logo-text {
             font-size: 1.5rem !important;
         }
-        /* Container Principal Centralizado */
+        /* Container Principal */
         
         .admin-wrapper {
             flex: 1;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 140px 20px 60px;
-            /* Margem topo para não bater no menu */
+            padding: 120px 20px 60px;
+            /* Margem superior ajustada */
+            gap: 40px;
+            /* Espaço entre o formulário e a lista */
         }
-        /* Cartão do Formulário (Estilo "Glassmorphism" Dark) */
+        /* === 1. CARTÃO DO FORMULÁRIO === */
         
         .admin-card {
             width: 100%;
@@ -59,19 +61,17 @@
             box-shadow: 0 0 40px rgba(255, 140, 0, 0.15);
             position: relative;
         }
-        /* Título */
         
         .admin-card h2 {
             color: var(--orange-primary);
             text-align: center;
             margin-bottom: 30px;
             text-transform: uppercase;
-            letter-spacing: 2px;
             font-size: 1.8rem;
             border-bottom: 2px solid #333;
             padding-bottom: 15px;
+            font-family: 'Oxanium', cursive;
         }
-        /* Campos do Formulário */
         
         .form-group {
             margin-bottom: 20px;
@@ -83,7 +83,6 @@
             margin-bottom: 8px;
             font-family: 'Oxanium', cursive;
             font-weight: 600;
-            font-size: 0.95rem;
         }
         
         .input-field {
@@ -108,9 +107,8 @@
         .preview-container {
             margin-top: 10px;
             height: 0;
-            /* Escondido por padrão */
             overflow: hidden;
-            transition: height 0.3s ease;
+            transition: 0.3s;
             text-align: center;
             background: #151515;
             border-radius: 8px;
@@ -118,7 +116,6 @@
         
         .preview-container.active {
             height: 220px;
-            /* Abre quando tem imagem */
             border: 1px dashed #444;
             padding: 10px;
         }
@@ -157,6 +154,76 @@
             cursor: not-allowed;
             transform: none;
         }
+        /* === 2. LISTA DE PRODUTOS === */
+        
+        .products-list-section {
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .admin-product-item {
+            background: #252525;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: 0.3s;
+        }
+        
+        .admin-product-item:hover {
+            border-color: var(--orange-primary);
+            transform: translateX(5px);
+            background: #2a2a2a;
+        }
+        
+        .prod-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .prod-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            object-fit: cover;
+            border: 1px solid #444;
+        }
+        
+        .prod-details h4 {
+            color: #fff;
+            margin-bottom: 3px;
+            font-family: 'Oxanium', cursive;
+            font-size: 1rem;
+        }
+        
+        .prod-details p {
+            color: var(--orange-primary);
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .delete-btn {
+            background: transparent;
+            border: 1px solid #ff4444;
+            color: #ff4444;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+        }
+        
+        .delete-btn:hover {
+            background: #ff4444;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.3);
+        }
     </style>
 </head>
 
@@ -165,7 +232,7 @@
         <nav class="navbar">
             <div class="logo">
                 <div class="logo-icon">
-                    <img src="img/1758081673451.jpg" alt="Logo Mata-Burro">
+                    <img src="img/1758081673451.jpg" alt="Logo">
                 </div>
                 <div class="logo-text">Painel Admin</div>
             </div>
@@ -176,6 +243,7 @@
     </header>
 
     <div class="admin-wrapper">
+
         <div class="admin-card">
             <h2><i class="fas fa-plus-circle"></i> Novo Produto</h2>
 
@@ -191,17 +259,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="prodImage">Link da Imagem / Caminho</label>
-                    <input type="text" id="prodImage" class="input-field" placeholder="Cole o link ou use 'img/foto.png'" required oninput="previewImage(this.value)">
+                    <label for="prodImage">Link da Imagem (URL)</label>
+                    <input type="text" id="prodImage" class="input-field" placeholder="Cole o link aqui..." required oninput="previewImage(this.value)">
 
                     <div class="preview-container" id="previewBox">
-                        <img id="imgPreview" class="preview-img" alt="Pré-visualização">
+                        <img id="imgPreview" class="preview-img" alt="Preview">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="prodDesc">Descrição Detalhada</label>
-                    <textarea id="prodDesc" class="input-field" rows="4" placeholder="Detalhes do material, tamanhos, etc..."></textarea>
+                    <label for="prodDesc">Descrição</label>
+                    <textarea id="prodDesc" class="input-field" rows="3" placeholder="Detalhes do produto..."></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn">
@@ -209,6 +277,17 @@
                 </button>
             </form>
         </div>
+
+        <div class="products-list-section">
+            <h3 style="color: #fff; margin-bottom: 20px; font-family: 'Oxanium'; border-left: 4px solid var(--orange-primary); padding-left: 10px; font-size: 1.5rem;">
+                Gerenciar Produtos
+            </h3>
+
+            <div id="adminProductList">
+                <p style="color: #777; text-align: center;">Carregando lista...</p>
+            </div>
+        </div>
+
     </div>
 
     <script>
