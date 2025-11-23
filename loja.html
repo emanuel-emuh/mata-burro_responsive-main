@@ -12,31 +12,88 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* === ESTILOS EXCLUSIVOS DA LOJA === */
+        /* === CORREÇÕES DA NAVBAR E LAYOUT === */
         
         body {
             background-color: var(--dark-bg);
             min-height: 100vh;
         }
-        /* Container Principal */
+        /* 1. Navbar Compacta e Organizada */
+        
+        header {
+            padding: 10px 5% !important;
+            /* Reduz espaçamento interno */
+            background: rgba(26, 26, 26, 0.98);
+            /* Fundo quase sólido para leitura */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            height: 80px;
+            /* Altura fixa para não crescer demais */
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* Garante extremos */
+        }
+        /* Logo menor para não estourar a barra */
+        
+        .logo-icon img {
+            height: 50px !important;
+            width: auto;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem !important;
+        }
+        /* 2. Empurrar Botões para a Direita */
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin-left: auto;
+            /* <--- O SEGRED0: Empurra tudo para a direita */
+            margin-right: 20px;
+            /* Espaço entre "Início" e o botão de Login */
+            align-items: center;
+        }
+        
+        .nav-links li a {
+            font-family: 'Oxanium', cursive;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 1rem;
+        }
+        /* Botão de Login Ajustado */
+        
+        .login-nav-btn {
+            margin-left: 0 !important;
+            /* Remove margem extra antiga */
+            white-space: nowrap;
+            /* Não deixa quebrar linha */
+        }
+        /* 3. Espaçamento para o Conteúdo não ficar escondido */
         
         .shop-wrapper {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 120px 5% 60px;
-            /* Margem topo para navbar */
+            /* Aumentei para 160px para garantir que não bate na navbar */
+            padding: 160px 5% 60px;
             display: grid;
             grid-template-columns: 1fr 350px;
-            /* Produtos vs Carrinho */
             gap: 40px;
             align-items: start;
         }
-        /* === 1. ÁREA DE PRODUTOS === */
+        /* === RESTANTE DOS ESTILOS DA LOJA (MANTIDOS IGUAIS) === */
+        /* Área de Produtos */
         
         .products-area {
             width: 100%;
         }
-        /* Barra de Filtros */
+        /* Filtros */
         
         .filters-bar {
             display: flex;
@@ -73,14 +130,13 @@
             border-color: var(--orange-primary);
             box-shadow: 0 0 15px rgba(255, 140, 0, 0.4);
         }
-        /* Grid de Produtos */
+        /* Grid e Cards */
         
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 30px;
         }
-        /* Card do Produto */
         
         .shop-card {
             background: linear-gradient(145deg, #222, #1a1a1a);
@@ -90,7 +146,6 @@
             display: flex;
             flex-direction: column;
             transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
         }
         
         .shop-card:hover {
@@ -165,7 +220,7 @@
             background: var(--orange-primary);
             color: #000;
         }
-        /* === 2. CARRINHO LATERAL (STICKY) === */
+        /* Carrinho */
         
         .cart-box {
             background: #1a1a1a;
@@ -173,9 +228,10 @@
             border-radius: 20px;
             padding: 25px;
             position: sticky;
-            top: 100px;
-            /* Faz o carrinho acompanhar o scroll */
+            top: 110px;
+            /* Ajustado para compensar a navbar */
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            z-index: 10;
         }
         
         .cart-header {
@@ -200,7 +256,6 @@
             margin-bottom: 20px;
             padding-right: 5px;
         }
-        /* Scrollbar fina para o carrinho */
         
         .cart-list::-webkit-scrollbar {
             width: 5px;
@@ -244,13 +299,10 @@
             color: #ff4444;
             cursor: pointer;
             padding: 5px;
-            font-size: 0.9rem;
-            opacity: 0.7;
             transition: 0.2s;
         }
         
         .remove-btn:hover {
-            opacity: 1;
             transform: scale(1.1);
         }
         
@@ -277,7 +329,6 @@
         .checkout-btn {
             width: 100%;
             background: linear-gradient(45deg, #25D366, #128C7E);
-            /* Verde WhatsApp */
             color: #fff;
             border: none;
             padding: 15px;
@@ -298,18 +349,19 @@
             transform: translateY(-3px);
             box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
         }
-        /* Responsividade */
         
         @media (max-width: 900px) {
             .shop-wrapper {
                 grid-template-columns: 1fr;
-                /* Vira coluna única no mobile */
             }
             .cart-box {
                 position: static;
-                /* Remove sticky no mobile */
                 margin-top: 40px;
             }
+            .nav-links {
+                display: none;
+            }
+            /* Esconde links no mobile se necessário, ou usa menu hamburguer */
         }
     </style>
 </head>
@@ -325,9 +377,11 @@
                     <div class="logo-text">Mata-Burro Store</div>
                 </a>
             </div>
+
             <ul class="nav-links">
                 <li><a href="index.html">Início</a></li>
             </ul>
+
             <a href="login.html" id="navLoginBtn" class="login-nav-btn">Login</a>
         </nav>
     </header>
@@ -335,7 +389,6 @@
     <div class="shop-wrapper">
 
         <main class="products-area">
-
             <div class="filters-bar">
                 <button class="filter-btn active" onclick="filterProducts('todos')">Todos</button>
                 <button class="filter-btn" onclick="filterProducts('camisas')">Camisas</button>
@@ -355,7 +408,7 @@
             </div>
 
             <div class="cart-list" id="cartItems">
-                <p style="color: #666; text-align: center; margin-top: 20px;">Seu carrinho está vazio.</p>
+                <p style="color: #666; text-align: center; margin-top: 20px;">Carrinho vazio</p>
             </div>
 
             <div class="cart-footer">
