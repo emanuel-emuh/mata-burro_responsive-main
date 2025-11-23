@@ -6,44 +6,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Admin - Mata-Burro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Oxaniu:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+
     <style>
+        /* === CORREÇÃO DO LAYOUT DO ADMIN === */
+        
+        body {
+            /* Garante que o fundo seja escuro */
+            background-color: var(--dark-bg);
+            min-height: 100vh;
+        }
+        
         .admin-container {
-            max-width: 800px;
-            margin: 120px auto 50px;
-            padding: 30px;
-            background: rgba(30, 30, 30, 0.95);
-            border-radius: 15px;
+            max-width: 600px;
+            /* Margem grande no topo para não ficar atrás da navbar fixa */
+            margin: 140px auto 50px;
+            padding: 40px;
+            /* Fundo sólido para destacar o formulário */
+            background: linear-gradient(145deg, #222, #1a1a1a);
+            border-radius: 20px;
             border: 1px solid var(--orange-primary);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+        
+        h2 {
+            text-align: center;
+            color: var(--orange-primary);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            font-family: 'Oxanium', cursive;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         .form-group label {
             display: block;
-            color: var(--orange-primary);
-            margin-bottom: 5px;
-            font-family: 'Oxanium';
+            color: #ccc;
+            margin-bottom: 10px;
+            font-family: 'Oxanium', cursive;
+            font-weight: 600;
+        }
+        /* Estilo dos Inputs de Texto */
+        
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: #0f0f0f;
+            /* Fundo bem escuro */
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 10px;
+            outline: none;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
         }
         
-        .form-group input,
-        .form-group textarea {
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--orange-primary);
+            box-shadow: 0 0 10px rgba(255, 140, 0, 0.2);
+        }
+        /* === ESTILO DO INPUT DE ARQUIVO (NOVO) === */
+        
+        input[type="file"] {
             width: 100%;
             padding: 10px;
             background: #333;
-            border: 1px solid #555;
             color: #fff;
-            border-radius: 5px;
+            border-radius: 10px;
+            border: 1px dashed #555;
+            cursor: pointer;
+        }
+        /* Área de Pré-visualização da Imagem */
+        
+        .preview-box {
+            margin-top: 15px;
+            text-align: center;
+            min-height: 50px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 10px;
         }
         
         .preview-img {
-            max-width: 200px;
-            margin-top: 10px;
-            border-radius: 5px;
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 10px;
             display: none;
+            /* Só aparece quando selecionar imagem */
+            border: 2px solid var(--orange-primary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
@@ -51,7 +111,12 @@
 <body>
     <header>
         <nav class="navbar">
-            <div class="logo">Mata-Burro Admin</div>
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="img/1758081673451.jpg" alt="Logo">
+                </div>
+                <div class="logo-text">Painel Admin</div>
+            </div>
             <ul class="nav-links">
                 <li><a href="index.html">Voltar ao Site</a></li>
             </ul>
@@ -60,6 +125,7 @@
 
     <section class="admin-container">
         <h2>Adicionar Novo Produto</h2>
+
         <form id="productForm">
             <div class="form-group">
                 <label>Nome do Produto</label>
@@ -72,9 +138,12 @@
             </div>
 
             <div class="form-group">
-                <label>URL da Imagem</label>
-                <input type="url" id="prodImage" required placeholder="https://..." onchange="previewImage(this)">
-                <img id="imgPreview" class="preview-img">
+                <label for="prodFile">Foto do Produto (PNG ou JPEG)</label>
+                <input type="file" id="prodFile" accept="image/png, image/jpeg" required>
+
+                <div class="preview-box">
+                    <img id="imgPreview" class="preview-img">
+                </div>
             </div>
 
             <div class="form-group">
@@ -82,19 +151,10 @@
                 <textarea id="prodDesc" rows="4" placeholder="Detalhes do produto..."></textarea>
             </div>
 
-            <button type="submit" class="cta-button">Salvar Produto</button>
+            <button type="submit" class="cta-button" style="width: 100%;">Salvar Produto</button>
         </form>
     </section>
 
-    <script>
-        function previewImage(input) {
-            const img = document.getElementById('imgPreview');
-            if (input.value) {
-                img.src = input.value;
-                img.style.display = 'block';
-            }
-        }
-    </script>
     <script type="module" src="js/admin.js"></script>
 </body>
 
