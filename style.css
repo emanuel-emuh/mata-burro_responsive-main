@@ -56,7 +56,7 @@ ul {
 
 
 /* =========================================
-   2. HEADER E NAVBAR (PADRÃO GLOBAL)
+   2. HEADER E NAVBAR (CORRIGIDO)
    ========================================= */
 
 header {
@@ -65,6 +65,7 @@ header {
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
     height: 80px;
+    /* Altura fixa compacta */
     display: flex;
     align-items: center;
     position: fixed;
@@ -89,6 +90,7 @@ header {
 
 .logo-icon img {
     height: 50px;
+    /* CORRIGIDO: Era 100px, agora é 50px para caber na barra */
     width: auto;
     border-radius: 50%;
     border: 2px solid var(--orange-primary);
@@ -111,7 +113,7 @@ header {
     gap: 25px;
     align-items: center;
     margin-left: auto;
-    /* Empurra para direita */
+    /* Empurra para a direita */
     margin-right: 20px;
 }
 
@@ -145,7 +147,7 @@ header {
 }
 
 
-/* Botão de Login na Navbar */
+/* Botão Login */
 
 .login-nav-btn {
     border: 2px solid var(--orange-primary);
@@ -167,7 +169,7 @@ header {
 }
 
 
-/* Menu Hambúrguer (Mobile) */
+/* Menu Mobile */
 
 .hamburger {
     display: none;
@@ -254,7 +256,30 @@ header {
 }
 
 
-/* Jogadores Grid */
+/* =========================================
+   4. HISTÓRIA (CORRIGIDO - TEXTO CORRIDO)
+   ========================================= */
+
+.history-text-box {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: justify;
+    /* Justificado para ficar bonito em bloco */
+    line-height: 1.8;
+    color: #ccc;
+    font-size: 1.1rem;
+    padding: 0 20px;
+}
+
+.highlight-text {
+    color: var(--orange-primary);
+    font-weight: 700;
+}
+
+
+/* =========================================
+   5. JOGADORES & CAMISAS
+   ========================================= */
 
 .players-grid {
     display: grid;
@@ -308,9 +333,6 @@ header {
     text-transform: uppercase;
 }
 
-
-/* Camisas na Home */
-
 .jersey-section {
     background: #151515;
     padding: 80px 5%;
@@ -326,7 +348,7 @@ header {
 
 
 /* =========================================
-   4. PÁGINA DE ADMINISTRAÇÃO
+   6. PÁGINA DE ADMINISTRAÇÃO
    ========================================= */
 
 .admin-wrapper {
@@ -335,6 +357,7 @@ header {
     flex-direction: column;
     align-items: center;
     padding: 140px 20px 60px;
+    /* Espaço para navbar */
     gap: 40px;
 }
 
@@ -512,13 +535,14 @@ header {
 
 
 /* =========================================
-   5. PÁGINA DA LOJA
+   7. PÁGINA DA LOJA
    ========================================= */
 
 .shop-wrapper {
     max-width: 1400px;
     margin: 0 auto;
     padding: 140px 5% 60px;
+    /* Espaço topo ajustado */
     display: grid;
     grid-template-columns: 1fr 350px;
     gap: 40px;
@@ -528,9 +552,6 @@ header {
 .products-area {
     width: 100%;
 }
-
-
-/* Filtros */
 
 .filters-bar {
     display: flex;
@@ -561,9 +582,6 @@ header {
     border-color: var(--orange-primary);
     box-shadow: 0 0 15px rgba(255, 140, 0, 0.4);
 }
-
-
-/* Grid Produtos */
 
 .products-grid {
     display: grid;
@@ -670,9 +688,6 @@ header {
     background: var(--orange-dark);
     border-color: var(--orange-dark);
 }
-
-
-/* Carrinho Lateral */
 
 .cart-box {
     background: #1a1a1a;
@@ -799,7 +814,120 @@ header {
 }
 
 
-/* Modal de Detalhes */
+/* =========================================
+   8. LOGIN & MODAL
+   ========================================= */
+
+.login-section {
+    min-height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('https://img.goodfon.com/original/2560x1440/1/f5/firewatch-igra-minimalizm.jpg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px;
+}
+
+.login-container {
+    background: linear-gradient(to bottom, rgba(34, 34, 34, 0.95), rgba(26, 26, 26, 0.95));
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 140, 0, 0.3);
+    box-shadow: 0 0 30px rgba(255, 140, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, var(--orange-dark), var(--orange-primary), var(--orange-light));
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-header h2 {
+    color: var(--orange-primary);
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.login-header p {
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--orange-primary);
+    font-size: 1.1rem;
+}
+
+.input-group input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid #333;
+    border-radius: 30px;
+    padding: 15px 15px 15px 45px;
+    color: #fff;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    border-color: var(--orange-primary);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    font-size: 0.85rem;
+    color: #ccc;
+}
+
+.login-btn {
+    width: 100%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    border: none;
+    margin-top: 10px;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.login-footer a {
+    color: var(--orange-primary);
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+
+/* Modal */
 
 .product-modal {
     display: none;
@@ -924,120 +1052,7 @@ header {
 
 
 /* =========================================
-   6. LOGIN & CADASTRO
-   ========================================= */
-
-.login-section {
-    min-height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('https://img.goodfon.com/original/2560x1440/1/f5/firewatch-igra-minimalizm.jpg') no-repeat center center/cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 80px;
-}
-
-.login-container {
-    background: linear-gradient(to bottom, rgba(34, 34, 34, 0.95), rgba(26, 26, 26, 0.95));
-    width: 100%;
-    max-width: 450px;
-    padding: 40px;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 140, 0, 0.3);
-    box-shadow: 0 0 30px rgba(255, 140, 0, 0.15);
-    position: relative;
-    overflow: hidden;
-}
-
-.login-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(to right, var(--orange-dark), var(--orange-primary), var(--orange-light));
-}
-
-.login-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.login-header h2 {
-    color: var(--orange-primary);
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-.login-header p {
-    color: #ccc;
-    font-size: 0.9rem;
-}
-
-.input-group {
-    position: relative;
-    margin-bottom: 20px;
-}
-
-.input-group i {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--orange-primary);
-    font-size: 1.1rem;
-}
-
-.input-group input {
-    width: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    border: 2px solid #333;
-    border-radius: 30px;
-    padding: 15px 15px 15px 45px;
-    color: #fff;
-    outline: none;
-    transition: 0.3s;
-}
-
-.input-group input:focus {
-    border-color: var(--orange-primary);
-    background: rgba(0, 0, 0, 0.5);
-}
-
-.form-options {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
-    font-size: 0.85rem;
-    color: #ccc;
-}
-
-.login-btn {
-    width: 100%;
-    cursor: pointer;
-    font-size: 1.1rem;
-    border: none;
-    margin-top: 10px;
-}
-
-.login-footer {
-    text-align: center;
-    margin-top: 25px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.9rem;
-    color: #ccc;
-}
-
-.login-footer a {
-    color: var(--orange-primary);
-    font-weight: 600;
-    margin-left: 5px;
-}
-
-
-/* =========================================
-   7. FOOTER
+   9. FOOTER & RESPONSIVIDADE FINAL
    ========================================= */
 
 footer {
@@ -1115,11 +1130,6 @@ footer {
     font-size: 0.9rem;
 }
 
-
-/* =========================================
-   8. RESPONSIVIDADE GERAL
-   ========================================= */
-
 @media (max-width: 900px) {
     .shop-wrapper {
         grid-template-columns: 1fr;
@@ -1168,40 +1178,4 @@ footer {
     .players-grid {
         padding: 0 20px;
     }
-}
-
-
-/* Estilos para o Texto da História */
-
-.history-content-box {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-    line-height: 1.8;
-    color: #ccc;
-    font-size: 1.05rem;
-}
-
-.history-content-box p {
-    margin-bottom: 20px;
-    /* Espaço entre parágrafos */
-}
-
-
-/* Destaque Laranja (Nome do Time) */
-
-.highlight-text {
-    color: var(--orange-primary);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-
-/* Destaque dos Jogos (Opcional: cor diferente ou negrito) */
-
-.game-highlight {
-    color: #fff;
-    font-weight: 600;
-    border-bottom: 1px solid var(--orange-primary);
 }
