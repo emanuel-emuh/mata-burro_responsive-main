@@ -20,7 +20,7 @@
             display: flex;
             flex-direction: column;
         }
-        /* Ajuste da Navbar para não ocupar muito espaço no Admin */
+        /* Navbar ajustada */
         
         header {
             padding: 10px 5% !important;
@@ -30,14 +30,13 @@
         
         .logo-icon img {
             height: 50px !important;
-            /* Força o logo a ser menor aqui */
             width: auto;
         }
         
         .logo-text {
             font-size: 1.5rem !important;
         }
-        /* Container Principal */
+        /* Wrapper Principal */
         
         .admin-wrapper {
             flex: 1;
@@ -45,9 +44,7 @@
             flex-direction: column;
             align-items: center;
             padding: 120px 20px 60px;
-            /* Margem superior ajustada */
             gap: 40px;
-            /* Espaço entre o formulário e a lista */
         }
         /* === 1. CARTÃO DO FORMULÁRIO === */
         
@@ -59,7 +56,6 @@
             border-radius: 20px;
             padding: 40px;
             box-shadow: 0 0 40px rgba(255, 140, 0, 0.15);
-            position: relative;
         }
         
         .admin-card h2 {
@@ -102,7 +98,7 @@
             box-shadow: 0 0 15px rgba(255, 140, 0, 0.2);
             outline: none;
         }
-        /* Pré-visualização da Imagem */
+        /* Preview da Imagem */
         
         .preview-container {
             margin-top: 10px;
@@ -139,7 +135,7 @@
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s;
             font-family: 'Oxanium', cursive;
             text-transform: uppercase;
         }
@@ -175,7 +171,6 @@
         
         .admin-product-item:hover {
             border-color: var(--orange-primary);
-            transform: translateX(5px);
             background: #2a2a2a;
         }
         
@@ -207,6 +202,13 @@
             margin: 0;
         }
         
+        .prod-cat {
+            font-size: 0.75rem !important;
+            color: #888 !important;
+            text-transform: uppercase;
+            font-weight: normal !important;
+        }
+        
         .delete-btn {
             background: transparent;
             border: 1px solid #ff4444;
@@ -222,7 +224,6 @@
         .delete-btn:hover {
             background: #ff4444;
             color: #fff;
-            box-shadow: 0 0 10px rgba(255, 68, 68, 0.3);
         }
     </style>
 </head>
@@ -259,9 +260,18 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="prodImage">Link da Imagem (URL)</label>
-                    <input type="text" id="prodImage" class="input-field" placeholder="Cole o link aqui..." required oninput="previewImage(this.value)">
+                    <label for="prodCategory">Categoria</label>
+                    <select id="prodCategory" class="input-field" style="cursor: pointer;">
+                        <option value="camisas">Camisas</option>
+                        <option value="acessorios">Acessórios</option>
+                        <option value="eletronicos">Eletrônicos</option>
+                        <option value="outros">Outros</option>
+                    </select>
+                </div>
 
+                <div class="form-group">
+                    <label for="prodImage">Link da Imagem (URL)</label>
+                    <input type="text" id="prodImage" class="input-field" placeholder="Cole o link ou use 'img/foto.png'" required oninput="previewImage(this.value)">
                     <div class="preview-container" id="previewBox">
                         <img id="imgPreview" class="preview-img" alt="Preview">
                     </div>
@@ -282,7 +292,6 @@
             <h3 style="color: #fff; margin-bottom: 20px; font-family: 'Oxanium'; border-left: 4px solid var(--orange-primary); padding-left: 10px; font-size: 1.5rem;">
                 Gerenciar Produtos
             </h3>
-
             <div id="adminProductList">
                 <p style="color: #777; text-align: center;">Carregando lista...</p>
             </div>
@@ -297,12 +306,8 @@
 
             if (url.length > 5) {
                 img.src = url;
-                img.onload = function() {
-                    box.classList.add('active'); // Mostra a caixa se a imagem carregar
-                }
-                img.onerror = function() {
-                    box.classList.remove('active'); // Esconde se der erro
-                }
+                img.onload = () => box.classList.add('active');
+                img.onerror = () => box.classList.remove('active');
             } else {
                 box.classList.remove('active');
             }

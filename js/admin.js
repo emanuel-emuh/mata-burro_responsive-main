@@ -1,29 +1,27 @@
 import { auth, db } from './firebase-config.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-// Importamos tudo o que precisamos do Firestore: ler, adicionar, listar e deletar
 import { doc, getDoc, collection, addDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 const productForm = document.getElementById('productForm');
 const productListContainer = document.getElementById('adminProductList');
 
 // ==========================================
-// 1. SEGURANÇA: Verifica se é Admin
+// 1. SEGURANÇA (ADMIN)
 // ==========================================
 onAuthStateChanged(auth, async(user) => {
     if (user) {
         try {
             const userDoc = await getDoc(doc(db, "users", user.uid));
 
-            // Se tiver a role 'admin', libera o acesso e carrega a lista
             if (userDoc.exists() && userDoc.data().role === "admin") {
                 console.log("Admin logado: " + user.email);
-                loadAdminProducts(); // <--- Carrega os produtos ao entrar
+                loadAdminProducts(); // Carrega a lista
             } else {
-                alert("Acesso Negado. Apenas administradores.");
+                alert("Acesso Negado.");
                 window.location.href = "index.html";
             }
         } catch (error) {
-            console.error("Erro ao verificar permissão:", error);
+            console.error("Erro auth:", error);
             window.location.href = "index.html";
         }
     } else {
@@ -32,13 +30,12 @@ onAuthStateChanged(auth, async(user) => {
 });
 
 // ==========================================
-// 2. LISTAR PRODUTOS (Carrega do Banco)
+// 2. LISTAR PRODUTOS
 // ==========================================
 async function loadAdminProducts() {
     if (!productListContainer) return;
 
-    // Mostra mensagem de carregando
-    productListContainer.innerHTML = '<p style="color:#888; text-align:center;">Atualizando lista...</p>';
+    productListContainer.innerHTML = '<p style="color:#888; text-align:center;">Atualizando...</p>';
 
     try {
         const querySnapshot = await getDocs(collection(db, "products"));
@@ -48,14 +45,15 @@ async function loadAdminProducts() {
             return;
         }
 
-        // Limpa a lista antes de encher
         productListContainer.innerHTML = "";
 
         querySnapshot.forEach((docSnap) => {
             const product = docSnap.data();
-            const id = docSnap.id; // ID do produto para poder apagar
+            const id = docSnap.id;
 
-            // Cria o HTML de cada produto na lista
+            // Exibe Categoria se existir, senão 'Geral'
+            const categoryDisplay = product.category ? product.category.toUpperCase() : 'GERAL';
+
             const itemHTML = `
                 <div class="admin-product-item">
                     <div class="prod-info">
@@ -63,6 +61,7 @@ async function loadAdminProducts() {
                         <div class="prod-details">
                             <h4>${product.name}</h4>
                             <p>R$ ${product.price.toFixed(2)}</p>
+                            <p class="prod-cat">${categoryDisplay}</p>
                         </div>
                     </div>
                     <button class="delete-btn" onclick="window.deleteProduct('${id}', '${product.name}')">
@@ -74,26 +73,23 @@ async function loadAdminProducts() {
         });
 
     } catch (error) {
-        console.error("Erro ao listar:", error);
-        productListContainer.innerHTML = '<p style="color:red; text-align:center;">Erro ao carregar lista.</p>';
+        console.error("Erro lista:", error);
+        productListContainer.innerHTML = '<p style="color:red;">Erro ao carregar lista.</p>';
     }
 }
 
 // ==========================================
-// 3. DELETAR PRODUTO (Global)
+// 3. DELETAR PRODUTO
 // ==========================================
-// Colocamos no 'window' para o botão onclick no HTML conseguir achar a função
 window.deleteProduct = async(id, name) => {
-    const confirmDelete = confirm(`Tem certeza que deseja APAGAR:\n"${name}"?\n\nIsso não pode ser desfeito.`);
-
-    if (confirmDelete) {
+    if (confirm(`Tem certeza que deseja APAGAR:\n"${name}"?`)) {
         try {
             await deleteDoc(doc(db, "products", id));
-            alert("Produto removido com sucesso!");
-            loadAdminProducts(); // Atualiza a lista na hora
+            alert("Produto removido!");
+            loadAdminProducts();
         } catch (error) {
-            console.error("Erro ao deletar:", error);
-            alert("Erro ao excluir: " + error.message);
+            console.error(error);
+            alert("Erro ao apagar.");
         }
     }
 };
@@ -107,10 +103,11 @@ if (productForm) {
 
         const name = document.getElementById('prodName').value;
         const price = parseFloat(document.getElementById('prodPrice').value);
-        // PEGA A CATEGORIA SELECIONADA
+        // Pega o valor do seletor de Categoria
         const category = document.getElementById('prodCategory').value;
         const image = document.getElementById('prodImage').value;
         const description = document.getElementById('prodDesc').value;
+
         const btn = productForm.querySelector('button');
         const originalText = btn.innerHTML;
 
@@ -121,7 +118,7 @@ if (productForm) {
             await addDoc(collection(db, "products"), {
                 name: name,
                 price: price,
-                category: category, // SALVA NO BANCO
+                category: category, // Salva no banco
                 image: image,
                 description: description,
                 createdAt: new Date()
@@ -134,7 +131,7 @@ if (productForm) {
             loadAdminProducts();
 
         } catch (error) {
-            console.error("Erro ao salvar:", error);
+            console.error("Erro:", error);
             alert("Erro: " + error.message);
         } finally {
             btn.innerHTML = originalText;
