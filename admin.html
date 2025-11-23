@@ -30,6 +30,7 @@
             <div class="admin-tabs">
                 <button class="tab-btn active" onclick="switchTab('product')">Produtos</button>
                 <button class="tab-btn" onclick="switchTab('news')">Notícias</button>
+                <button class="tab-btn" onclick="switchTab('users')">Usuários</button>
             </div>
 
             <div id="productSection">
@@ -91,6 +92,10 @@
                     <button type="submit" class="submit-btn">Publicar Notícia</button>
                 </form>
             </div>
+
+            <div id="usersSection" style="display: none; text-align: center; color: #ccc;">
+                <p><i class="fas fa-info-circle"></i> Gerencie os membros da equipe abaixo.</p>
+            </div>
         </div>
 
         <div class="products-list-section">
@@ -104,6 +109,13 @@
             <div id="newsListContainer" style="display: none;">
                 <h3 style="color:#fff; border-left:4px solid var(--orange-primary); padding-left:10px; margin-bottom:20px;">Notícias Publicadas</h3>
                 <div id="adminNewsList">
+                    <p style="color:#777;">Carregando...</p>
+                </div>
+            </div>
+
+            <div id="usersListContainer" style="display: none;">
+                <h3 style="color:#fff; border-left:4px solid var(--orange-primary); padding-left:10px; margin-bottom:20px;">Usuários Registrados</h3>
+                <div id="adminUsersList">
                     <p style="color:#777;">Carregando...</p>
                 </div>
             </div>
@@ -124,13 +136,28 @@
         }
 
         function switchTab(tab) {
-            // Alterna Forms
-            document.getElementById('productSection').style.display = tab === 'product' ? 'block' : 'none';
-            document.getElementById('newsSection').style.display = tab === 'news' ? 'block' : 'none';
-            // Alterna Listas
-            document.getElementById('productListContainer').style.display = tab === 'product' ? 'block' : 'none';
-            document.getElementById('newsListContainer').style.display = tab === 'news' ? 'block' : 'none';
-            // Alterna Botões
+            // Esconde tudo
+            document.getElementById('productSection').style.display = 'none';
+            document.getElementById('newsSection').style.display = 'none';
+            document.getElementById('usersSection').style.display = 'none';
+
+            document.getElementById('productListContainer').style.display = 'none';
+            document.getElementById('newsListContainer').style.display = 'none';
+            document.getElementById('usersListContainer').style.display = 'none';
+
+            // Mostra o selecionado
+            if (tab === 'product') {
+                document.getElementById('productSection').style.display = 'block';
+                document.getElementById('productListContainer').style.display = 'block';
+            } else if (tab === 'news') {
+                document.getElementById('newsSection').style.display = 'block';
+                document.getElementById('newsListContainer').style.display = 'block';
+            } else if (tab === 'users') {
+                document.getElementById('usersSection').style.display = 'block';
+                document.getElementById('usersListContainer').style.display = 'block';
+            }
+
+            // Atualiza botões
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
         }
