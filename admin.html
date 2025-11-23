@@ -5,221 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Admin - Mata-Burro</title>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
-    <style>
-        /* === ESTILOS DO ADMIN === */
-        
-        body {
-            background-color: var(--dark-bg);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        header {
-            padding: 10px 5% !important;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            background: rgba(26, 26, 26, 0.95);
-        }
-        
-        .logo-icon img {
-            height: 50px !important;
-            width: auto;
-        }
-        
-        .logo-text {
-            font-size: 1.5rem !important;
-        }
-        
-        .admin-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 120px 20px 60px;
-            gap: 40px;
-        }
-        
-        .admin-card {
-            width: 100%;
-            max-width: 600px;
-            background: linear-gradient(145deg, #222, #1a1a1a);
-            border: 1px solid var(--orange-primary);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 0 40px rgba(255, 140, 0, 0.15);
-        }
-        
-        .admin-card h2 {
-            color: var(--orange-primary);
-            text-align: center;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            font-size: 1.8rem;
-            border-bottom: 2px solid #333;
-            padding-bottom: 15px;
-            font-family: 'Oxanium', cursive;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            color: #bbb;
-            margin-bottom: 8px;
-            font-family: 'Oxanium', cursive;
-            font-weight: 600;
-        }
-        
-        .input-field {
-            width: 100%;
-            background: #111;
-            border: 1px solid #444;
-            color: #fff;
-            padding: 12px 15px;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            transition: 0.3s;
-        }
-        
-        .input-field:focus {
-            border-color: var(--orange-primary);
-            outline: none;
-        }
-        /* Preview das Imagens */
-        
-        .preview-container {
-            margin-top: 10px;
-            height: 0;
-            overflow: hidden;
-            transition: 0.3s;
-            text-align: center;
-            background: #151515;
-            border-radius: 8px;
-        }
-        
-        .preview-container.active {
-            height: 220px;
-            border: 1px dashed #444;
-            padding: 10px;
-        }
-        
-        .preview-img {
-            height: 100%;
-            max-width: 100%;
-            object-fit: contain;
-            border-radius: 5px;
-        }
-        
-        .submit-btn {
-            width: 100%;
-            margin-top: 20px;
-            padding: 15px;
-            font-size: 1.1rem;
-            background: linear-gradient(to right, var(--orange-primary), var(--orange-dark));
-            border: none;
-            color: #fff;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: 'Oxanium', cursive;
-            text-transform: uppercase;
-        }
-        
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255, 140, 0, 0.3);
-        }
-        
-        .submit-btn:disabled {
-            background: #444;
-            cursor: not-allowed;
-            transform: none;
-        }
-        /* Lista de Produtos */
-        
-        .products-list-section {
-            width: 100%;
-            max-width: 600px;
-        }
-        
-        .admin-product-item {
-            background: #252525;
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .prod-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .prod-thumb {
-            width: 50px;
-            height: 50px;
-            border-radius: 5px;
-            object-fit: cover;
-            border: 1px solid #444;
-        }
-        
-        .prod-details h4 {
-            color: #fff;
-            margin-bottom: 3px;
-            font-family: 'Oxanium';
-            font-size: 1rem;
-        }
-        
-        .prod-details p {
-            color: var(--orange-primary);
-            font-size: 0.9rem;
-            font-weight: bold;
-            margin: 0;
-        }
-        
-        .prod-cat {
-            font-size: 0.75rem !important;
-            color: #888 !important;
-            text-transform: uppercase;
-            font-weight: normal !important;
-        }
-        
-        .delete-btn {
-            background: transparent;
-            border: 1px solid #ff4444;
-            color: #ff4444;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        
-        .delete-btn:hover {
-            background: #ff4444;
-            color: #fff;
-        }
-    </style>
 </head>
 
 <body>
     <header>
         <nav class="navbar">
             <div class="logo">
-                <div class="logo-icon">
-                    <img src="img/1758081673451.jpg" alt="Logo">
-                </div>
+                <div class="logo-icon"><img src="img/1758081673451.jpg" alt="Logo"></div>
                 <div class="logo-text">Painel Admin</div>
             </div>
             <ul class="nav-links">
@@ -231,18 +26,15 @@
     <div class="admin-wrapper">
         <div class="admin-card">
             <h2><i class="fas fa-plus-circle"></i> Novo Produto</h2>
-
             <form id="productForm">
                 <div class="form-group">
                     <label for="prodName">Nome do Produto</label>
                     <input type="text" id="prodName" class="input-field" placeholder="Ex: Camisa Oficial 2025" required>
                 </div>
-
                 <div class="form-group">
                     <label for="prodPrice">Preço (R$)</label>
                     <input type="number" id="prodPrice" class="input-field" step="0.01" placeholder="Ex: 149.90" required>
                 </div>
-
                 <div class="form-group">
                     <label for="prodCategory">Categoria</label>
                     <select id="prodCategory" class="input-field" style="cursor: pointer;">
@@ -252,40 +44,26 @@
                         <option value="outros">Outros</option>
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label for="prodImage">Link da Imagem (Frente)</label>
                     <input type="text" id="prodImage" class="input-field" placeholder="Cole o link..." required oninput="previewImage(this.value, 'previewBox', 'imgPreview')">
-
-                    <div class="preview-container" id="previewBox">
-                        <img id="imgPreview" class="preview-img">
-                    </div>
+                    <div class="preview-container" id="previewBox"><img id="imgPreview" class="preview-img"></div>
                 </div>
-
                 <div class="form-group">
                     <label for="prodImageBack" style="color: var(--orange-primary);">Link da Imagem 2 (Opcional)</label>
                     <input type="text" id="prodImageBack" class="input-field" placeholder="Apenas se for camisa com verso..." oninput="previewImage(this.value, 'previewBoxBack', 'imgPreviewBack')">
-
-                    <div class="preview-container" id="previewBoxBack">
-                        <img id="imgPreviewBack" class="preview-img">
-                    </div>
+                    <div class="preview-container" id="previewBoxBack"><img id="imgPreviewBack" class="preview-img"></div>
                 </div>
-
                 <div class="form-group">
                     <label for="prodDesc">Descrição</label>
                     <textarea id="prodDesc" class="input-field" rows="3" placeholder="Detalhes do produto..."></textarea>
                 </div>
-
-                <button type="submit" class="submit-btn">
-                    <i class="fas fa-save"></i> Salvar Produto
-                </button>
+                <button type="submit" class="submit-btn"><i class="fas fa-save"></i> Salvar Produto</button>
             </form>
         </div>
 
         <div class="products-list-section">
-            <h3 style="color: #fff; margin-bottom: 20px; font-family: 'Oxanium'; border-left: 4px solid var(--orange-primary); padding-left: 10px; font-size: 1.5rem;">
-                Gerenciar Produtos
-            </h3>
+            <h3 style="color: #fff; margin-bottom: 20px; border-left: 4px solid var(--orange-primary); padding-left: 10px;">Gerenciar Produtos</h3>
             <div id="adminProductList">
                 <p style="color: #777; text-align: center;">Carregando lista...</p>
             </div>
@@ -293,11 +71,9 @@
     </div>
 
     <script>
-        // Agora a função aceita os IDs específicos como parâmetro
         function previewImage(url, boxId, imgId) {
             const box = document.getElementById(boxId);
             const img = document.getElementById(imgId);
-
             if (url.length > 5) {
                 img.src = url;
                 img.onload = () => box.classList.add('active');
@@ -307,7 +83,6 @@
             }
         }
     </script>
-
     <script type="module" src="js/admin.js"></script>
 </body>
 

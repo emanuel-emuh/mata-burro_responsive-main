@@ -4,139 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mata-Burro - Equipe de E-Sports Mobile</title>
+    <title>Mata-Burro - Equipe de E-Sports</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Oxaniu:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <header>
         <nav class="navbar">
-            <div class="logo">
-                <div class="logo-icon">
-                    <img src="img/1758081673451.jpg" alt="Logo Mata-Burro E-Sports">
-                </div>
+            <a href="#" class="logo">
+                <div class="logo-icon"><img src="img/1758081673451.jpg" alt="Logo"></div>
                 <div class="logo-text">Mata-Burro</div>
-            </div>
-            <ul class="nav-links">
+            </a>
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Início</a></li>
                 <li><a href="#history">História</a></li>
                 <li><a href="#players">Jogadores</a></li>
-                <li><a href="#jerseys">Camisas</a></li>
-                <li><a href="#news">Notícias</a></li>
+                <li><a href="loja.html" style="color: var(--orange-primary);">Loja</a></li>
                 <li><a href="#contact">Contato</a></li>
-                <li><a href="loja.html" style="color: var(--orange-primary); font-weight: bold;">Loja</a></li>
+                <li><a href="login.html" id="navLoginBtn" class="login-nav-btn">Login</a></li>
             </ul>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-                <a href="https://discord.gg/y9sQAzBz"><i class="fab fa-discord"></i></a>
-            </div>
-
-            <!-- BOTÃO DE LOGIN ADICIONADO AQUI -->
-            <a href="login.html" id="navLoginBtn" class="login-nav-btn">Login</a>
-
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
             </div>
         </nav>
     </header>
 
     <section id="home" class="hero-banner">
         <div class="hero-content">
-            <h1>MATA-BURRO</h1>
-            <h1>E-SPORTS</h1>
-            <p>Dominando o cenário competitivo mobile com habilidade, estratégia e determinação. Nossa equipe veio para revolucionar os e-sports em dispositivos móveis.</p>
-            <a href="#history" class="cta-button">Conheça Nossa História</a>
+            <h1>MATA-BURRO <br><span>E-SPORTS</span></h1>
+            <p>Dominando o cenário competitivo mobile com habilidade, estratégia e determinação.</p>
+            <a href="loja.html" class="cta-button">Visitar Loja Oficial</a>
         </div>
     </section>
 
-    <section id="history" class="dark-section">
+    <section id="history">
         <div class="section-title">
             <h2>Nossa História</h2>
         </div>
-        <div class="history-content">
-            <div class="history-text">
-                <p>O <span class="highlight">Mata-Burro E-Sports</span> nasceu em 2025, formado por um grupo de amigos apaixonados por jogos online e movidos pelo desejo de competir em alto nível.</p>
-                <p>O projeto começou de forma simples, com partidas casuais entre amigos em títulos como <span class="highlight">Clash Royale</span>, <span class="highlight">Valorant</span> e outros, mas rapidamente evoluiu para a criação de uma organização
-                    com ambições no cenário competitivo.</p>
-                <p>Mesmo sendo uma equipe nova e ainda sem conquistas, o Mata-Burro já demonstra garra, dedicação e espírito de equipe, construindo sua identidade e buscando espaço entre os grandes nomes dos e-sports.</p>
-                <p>Nossa missão é crescer passo a passo, representar com orgulho a nossa comunidade e mostrar ao mundo o potencial dos novos talentos brasileiros no cenário competitivo.</p>
-            </div>
-        </div>
-
-        <div class="section-title">
-            <h2>Jogos que Dominamos</h2>
-        </div>
-        <div class="mobile-games">
-            <div class="game-card">
-                <div class="game-icon"><i class="fas fa-crosshairs"></i></div>
-                <h3>Valorant</h3>
-                <p>Não ganhamos nada ainda</p>
-            </div>
-            <div class="game-card">
-                <div class="game-icon"><i class="fas fa-chess"></i></div>
-                <h3>Clash Royale</h3>
-                <p>Não ganhamos nada ainda</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="jerseys" class="merch-section">
-        <div class="section-title">
-            <h2>Camisas do Time</h2>
-        </div>
-        <div class="jersey-container">
-            <div class="jersey-card">
-                <div class="jersey-display">
-                    <div class="jersey">
-                        <div class="jersey-front">
-                            <img src="img/camisa-frente.png" alt="Frente da camisa oficial Mata-Burro">
-                        </div>
-                        <div class="jersey-back">
-                            <img src="img/camisa-costa.png" alt="Costa da camisa oficial Mata-Burro">
-                        </div>
-                    </div>
-                </div>
-                <button class="flip-button" onclick="flipJersey(this)">Virar Camisa</button>
-                <div class="jersey-details">
-                    <h3>Camisa Oficial Mata-Burro 2025</h3>
-                    <p>Camisa de alta qualidade com design exclusivo da equipe Mata-Burro para a temporada 2025. Perfeita para torcer e representar seu time favorito.</p>
-                    <p><strong>Material:</strong> Poliéster de alta performance</p>
-                    <p><strong>Cores:</strong> Preto com detalhes em laranja</p>
-                    <p><strong>Disponível nos tamanhos:</strong> P, M, G, GG</p>
-                    <div class="jersey-price">R$ 149,90</div>
-                    <!-- Adicionei a classe buy-btn para a lógica de bloqueio funcionar aqui também se quiser -->
-                    <a href="pagina-camisas.html" class="buy-button">Comprar Agora</a>
-                </div>
-            </div>
-            <div class="jersey-card">
-                <div class="jersey-display">
-                    <div class="jersey">
-                        <div class="jersey-front">
-                            <img src="img/Edição Limitada frente.png" alt="Frente da camisa Edição Limitada Mata-Burro">
-                        </div>
-                        <div class="jersey-back">
-                            <img src="img/Camisa edição limitada costas.png" alt="Costa da camisa edição limitada">
-                        </div>
-                    </div>
-                </div>
-                <button class="flip-button" onclick="flipJersey(this)">Virar Camisa</button>
-                <div class="jersey-details">
-                    <h3>Edição Limitada Ouro</h3>
-                    <p>Camisa especial com detalhes premium em laranja. Edição limitada para os fãs mais dedicados do Mata-Burro.</p>
-                    <p><strong>Material:</strong> Algodão premium</p>
-                    <p><strong>Cores:</strong> Preto com detalhes em laranja brilhante</p>
-                    <p><strong>Disponível nos tamanhos:</strong> M, G, GG</p>
-                    <div class="jersey-price">R$ 199,90</div>
-                    <!-- Adicionei a classe buy-btn para a lógica de bloqueio funcionar aqui também se quiser -->
-                    <a href="pagina-camisas-vip.html" class="buy-button">Comprar Agora</a>
-                </div>
-            </div>
+        <div style="max-width: 800px; margin: 0 auto; text-align: center; line-height: 1.8; color: #ccc;">
+            <p>O <span style="color: var(--orange-primary); font-weight: bold;">Mata-Burro E-Sports</span> nasceu em 2025...</p>
+            <br>
+            <p>Buscamos o nosso espaço entre os grandes, com garra e dedicação.</p>
         </div>
     </section>
 
@@ -144,81 +54,26 @@
         <div class="section-title">
             <h2>Nossos Jogadores</h2>
         </div>
-        <div class="players-slider">
+        <div class="players-grid">
             <div class="player-card">
-                <div class="player-image"><img src="img/coelho.png" alt="emuh"></div>
+                <div class="player-image"><img src="img/coelho.png" alt="Pedro"></div>
                 <div class="player-info">
-                    <h3>Pedro Emanuel</h3>
-                    <p>Lider</p>
-                    <span class="player-role">Clash Royale</span>
-                </div>
+                    <h3>Pedro Emanuel</h3><span class="player-role">Líder</span></div>
             </div>
             <div class="player-card">
-                <div class="player-image"><img src="img/drock.png" alt="Sabiá"></div>
+                <div class="player-image"><img src="img/drock.png" alt="Gustavo"></div>
                 <div class="player-info">
-                    <h3>Gusatvo Kawe</h3>
-                    <p>Co-Lider</p>
-                    <span class="player-role">Clash Royale</span>
-                </div>
+                    <h3>Gustavo Kawe</h3><span class="player-role">Co-Líder</span></div>
             </div>
             <div class="player-card">
                 <div class="player-image"><img src="img/kid bengala.png" alt="Saulo"></div>
                 <div class="player-info">
-                    <h3>Saulo</h3>
-                    <p>Membro</p>
-                    <span class="player-role">Clash Royale</span>
-                </div>
+                    <h3>Saulo</h3><span class="player-role">Membro</span></div>
             </div>
             <div class="player-card">
                 <div class="player-image"><img src="img/tais mania.PNG" alt="Milton"></div>
                 <div class="player-info">
-                    <h3>Milton</h3>
-                    <p>Membro</p>
-                    <span class="player-role">Clash Royale</span>
-                </div>
-            </div>
-            <div class="player-card">
-                <div class="player-image"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSncUmqyPRqmPSLikPOBWSMJuoVl8SLc4Uv2A&s" alt="Mansuete"></div>
-                <div class="player-info">
-                    <h3>Mansuete "Manso"</h3>
-                    <p>Membro</p>
-                    <span class="player-role">Clash Royale</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="news" class="dark-section">
-        <div class="section-title">
-            <h2>Últimas Notícias</h2>
-        </div>
-        <div class="news-grid">
-            <div class="news-card">
-                <div class="news-image"><img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Mata-Burro vence campeonato"></div>
-                <div class="news-content">
-                    <span class="news-date">15 de abril, 2025</span>
-                    <h3>Mata-Burro é campeão do Mobile Masters 2025</h3>
-                    <p>Nossa equipe conquistou o título mundial após uma virada histórica contra a equipe chinesa Dragon Force.</p>
-                    <a href="#" class="read-more">Ler mais <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="news-card">
-                <div class="news-image"><img src="img/Edição Limitada frente.png" alt="Nova camisa oficial"></div>
-                <div class="news-content">
-                    <span class="news-date">2 de Fevereiro, 2025</span>
-                    <h3>Lançamento da nova camisa oficial da temporada</h3>
-                    <p>Já está disponível em nossa loja online a nova camisa oficial com design exclusivo e tecnologia avançada.</p>
-                    <a href="loja.html" class="read-more">Ler mais <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="news-card">
-                <div class="news-image"><img src="https://images.unsplash.com/photo-1511882150382-421056c89033?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Parceria com nova marca"></div>
-                <div class="news-content">
-                    <span class="news-date">28 de Janeiro, 2025</span>
-                    <h3>Mata-Burro anuncia parceria com gigante de tecnologia</h3>
-                    <p>A partir de 2025, nossa equipe contará com equipamentos de última geração fornecidos pela TechGamer.</p>
-                    <a href="#" class="read-more">Ler mais <i class="fas fa-arrow-right"></i></a>
-                </div>
+                    <h3>Milton</h3><span class="player-role">Membro</span></div>
             </div>
         </div>
     </section>
@@ -226,42 +81,28 @@
     <footer id="contact">
         <div class="footer-content">
             <div class="footer-column">
-                <h3>Sobre Nós</h3>
-                <p>O Mata-Burro E-Sports é uma equipe profissional de jogos mobile, competindo nos principais campeonatos nacionais e internacionais.</p>
-                <div class="footer-social">
+                <h3>Mata-Burro</h3>
+                <p>A revolução do cenário mobile.</p>
+                <div class="social-icons">
                     <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
                     <a href="#"><i class="fab fa-discord"></i></a>
                 </div>
             </div>
             <div class="footer-column">
-                <h3>Links Rápidos</h3>
-                <ul class="footer-links">
-                    <li><a href="#home"><i class="fas fa-chevron-right"></i> Início</a></li>
-                    <li><a href="#history"><i class="fas fa-chevron-right"></i> História</a></li>
-                    <li><a href="#players"><i class="fas fa-chevron-right"></i> Jogadores</a></li>
-                    <li><a href="#jerseys"><i class="fas fa-chevron-right"></i> Camisas</a></li>
-                    <li><a href="#news"><i class="fas fa-chevron-right"></i> Notícias</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
                 <h3>Contato</h3>
-                <ul class="footer-links">
-                    <li><i class="fas fa-map-marker-alt"></i> Apodi, Brasil</li>
-                    <li><i class="fas fa-envelope"></i> contato@mataburroesports.com</li>
-                    <li><i class="fas fa-phone"></i> +55 (84) 99999-9999</li>
-                </ul>
+                <p>contato@mataburro.com</p>
             </div>
         </div>
-        <div class="copyright">
-            &copy; 2025 Mata-Burro E-Sports. Todos os direitos reservados.
-        </div>
+        <div class="copyright">&copy; 2025 Mata-Burro E-Sports.</div>
     </footer>
 
-    <!-- IMPORTANTE: O SCRIPT DO CHECK-LOGIN VEM ANTES DO SCRIPT GERAL -->
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+        document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('active')));
+    </script>
     <script type="module" src="js/check-login.js"></script>
-    <script src="script.js"></script>
 </body>
 
 </html>

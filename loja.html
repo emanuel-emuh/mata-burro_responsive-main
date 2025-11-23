@@ -5,509 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loja Oficial - Mata-Burro</title>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="style.css">
-
-    <style>
-        /* === CORREÇÕES DA NAVBAR E LAYOUT === */
-        
-        body {
-            background-color: var(--dark-bg);
-            min-height: 100vh;
-        }
-        /* 1. Navbar Compacta e Organizada */
-        
-        header {
-            padding: 10px 5% !important;
-            background: rgba(26, 26, 26, 0.98);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-            height: 80px;
-            display: flex;
-            align-items: center;
-            position: fixed;
-            /* Garante que fica fixa */
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-        
-        .navbar {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .logo-icon img {
-            height: 50px !important;
-            width: auto;
-        }
-        
-        .logo-text {
-            font-size: 1.5rem !important;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-            margin-left: auto;
-            /* Empurra para a direita */
-            margin-right: 20px;
-            align-items: center;
-        }
-        
-        .nav-links li a {
-            font-family: 'Oxanium', cursive;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 1rem;
-            color: #fff;
-            text-decoration: none;
-        }
-        
-        .nav-links li a:hover {
-            color: var(--orange-primary);
-        }
-        
-        .login-nav-btn {
-            margin-left: 0 !important;
-            white-space: nowrap;
-        }
-        /* 2. Espaçamento do Conteúdo */
-        
-        .shop-wrapper {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 140px 5% 60px;
-            /* Margem superior segura */
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 40px;
-            align-items: start;
-        }
-        /* === ESTILOS DA LOJA === */
-        /* Área de Produtos */
-        
-        .products-area {
-            width: 100%;
-        }
-        /* Filtros */
-        
-        .filters-bar {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .filter-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ccc;
-            padding: 10px 25px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-family: 'Oxanium', cursive;
-            font-weight: 600;
-            transition: 0.3s;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
-        
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: var(--orange-primary);
-            color: #111;
-            border-color: var(--orange-primary);
-            box-shadow: 0 0 15px rgba(255, 140, 0, 0.4);
-        }
-        /* Grid e Cards */
-        
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .shop-card {
-            background: linear-gradient(145deg, #222, #1a1a1a);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: 0.3s;
-        }
-        
-        .shop-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--orange-primary);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-        
-        .card-img-container {
-            width: 100%;
-            height: 250px;
-            background: #111;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .shop-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        
-        .shop-card:hover .shop-img {
-            transform: scale(1.08);
-        }
-        
-        .card-body {
-            padding: 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .shop-title {
-            color: #fff;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-            font-family: 'Oxanium', cursive;
-            line-height: 1.4;
-        }
-        
-        .shop-price {
-            color: var(--orange-primary);
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        /* Botões do Card */
-        
-        .card-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: auto;
-        }
-        
-        .action-btn {
-            flex: 1;
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-            font-family: 'Oxanium', cursive;
-            border: 2px solid var(--orange-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-        /* Botão Detalhes (Outline) */
-        
-        .btn-details {
-            background: transparent;
-            color: var(--orange-primary);
-            font-size: 0.8rem;
-        }
-        
-        .btn-details:hover {
-            background: rgba(255, 140, 0, 0.1);
-        }
-        /* Botão Adicionar (Solid) */
-        
-        .btn-add {
-            background: var(--orange-primary);
-            color: #000;
-        }
-        
-        .btn-add:hover {
-            background: var(--orange-dark);
-            border-color: var(--orange-dark);
-        }
-        /* Carrinho Lateral */
-        
-        .cart-box {
-            background: #1a1a1a;
-            border: 1px solid var(--orange-primary);
-            border-radius: 20px;
-            padding: 25px;
-            position: sticky;
-            top: 110px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
-            z-index: 10;
-        }
-        
-        .cart-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            color: var(--orange-primary);
-        }
-        
-        .cart-header h3 {
-            font-family: 'Oxanium', cursive;
-            margin: 0;
-            font-size: 1.3rem;
-        }
-        
-        .cart-list {
-            max-height: 400px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-            padding-right: 5px;
-        }
-        
-        .cart-list::-webkit-scrollbar {
-            width: 5px;
-        }
-        
-        .cart-list::-webkit-scrollbar-thumb {
-            background: #444;
-            border-radius: 10px;
-        }
-        
-        .cart-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.9rem;
-        }
-        
-        .item-info strong {
-            display: block;
-            color: #fff;
-            margin-bottom: 2px;
-        }
-        
-        .item-info small {
-            color: #888;
-        }
-        
-        .item-price {
-            color: var(--orange-primary);
-            font-weight: bold;
-        }
-        
-        .remove-btn {
-            color: #ff4444;
-            cursor: pointer;
-            transition: 0.2s;
-            padding: 5px;
-        }
-        
-        .remove-btn:hover {
-            transform: scale(1.2);
-        }
-        
-        .cart-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 20px;
-        }
-        
-        .total-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.2rem;
-            color: #fff;
-            margin-bottom: 20px;
-            font-family: 'Oxanium', cursive;
-        }
-        
-        .total-price {
-            color: var(--orange-primary);
-            font-weight: 700;
-        }
-        
-        .checkout-btn {
-            width: 100%;
-            background: linear-gradient(45deg, #25D366, #128C7E);
-            color: #fff;
-            border: none;
-            padding: 15px;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-            font-family: 'Oxanium', cursive;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .checkout-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
-        }
-        /* === MODAL DE DETALHES === */
-        
-        .product-modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(5px);
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal-content {
-            background: #1a1a1a;
-            border: 1px solid var(--orange-primary);
-            border-radius: 20px;
-            width: 90%;
-            max-width: 900px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 0 50px rgba(255, 140, 0, 0.3);
-            animation: zoomIn 0.3s ease;
-        }
-        
-        @keyframes zoomIn {
-            from {
-                transform: scale(0.9);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            color: #fff;
-            font-size: 2rem;
-            cursor: pointer;
-            z-index: 10;
-            line-height: 1;
-        }
-        
-        .modal-close:hover {
-            color: var(--orange-primary);
-        }
-        
-        .modal-gallery {
-            background: #000;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-right: 1px solid #333;
-        }
-        
-        .modal-main-img {
-            width: 100%;
-            max-height: 350px;
-            object-fit: contain;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .modal-thumbs {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-        
-        .thumb-img {
-            width: 70px;
-            height: 70px;
-            border: 2px solid #333;
-            border-radius: 10px;
-            cursor: pointer;
-            object-fit: cover;
-            transition: 0.2s;
-        }
-        
-        .thumb-img:hover,
-        .thumb-img.active {
-            border-color: var(--orange-primary);
-            transform: scale(1.05);
-        }
-        
-        .modal-info {
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .modal-title {
-            font-family: 'Oxanium';
-            font-size: 2rem;
-            color: #fff;
-            margin-bottom: 10px;
-        }
-        
-        .modal-price {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--orange-primary);
-            margin-bottom: 20px;
-        }
-        
-        .modal-desc {
-            color: #ccc;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            flex-grow: 1;
-            font-size: 1rem;
-        }
-        
-        @media (max-width: 900px) {
-            .shop-wrapper {
-                grid-template-columns: 1fr;
-                padding-top: 120px;
-            }
-            .cart-box {
-                position: static;
-                margin-top: 40px;
-            }
-            .modal-content {
-                grid-template-columns: 1fr;
-                max-height: 90vh;
-                overflow-y: auto;
-            }
-            .modal-gallery {
-                border-right: none;
-                border-bottom: 1px solid #333;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -515,23 +15,18 @@
         <nav class="navbar">
             <div class="logo">
                 <a href="index.html" style="text-decoration: none; display: flex; align-items: center;">
-                    <div class="logo-icon">
-                        <img src="img/1758081673451.jpg" alt="Logo">
-                    </div>
+                    <div class="logo-icon"><img src="img/1758081673451.jpg" alt="Logo"></div>
                     <div class="logo-text">Mata-Burro Store</div>
                 </a>
             </div>
-
             <ul class="nav-links">
                 <li><a href="index.html">Início</a></li>
             </ul>
-
             <a href="login.html" id="navLoginBtn" class="login-nav-btn">Login</a>
         </nav>
     </header>
 
     <div class="shop-wrapper">
-
         <main class="products-area">
             <div class="filters-bar">
                 <button class="filter-btn active" onclick="filterProducts('todos')">Todos</button>
@@ -539,54 +34,38 @@
                 <button class="filter-btn" onclick="filterProducts('acessorios')">Acessórios</button>
                 <button class="filter-btn" onclick="filterProducts('eletronicos')">Eletrônicos</button>
             </div>
-
             <div class="products-grid" id="productsGrid">
-                <p style="color: #fff; font-size: 1.1rem;">A carregar catálogo...</p>
+                <p style="color: #fff;">A carregar catálogo...</p>
             </div>
         </main>
 
         <aside class="cart-box">
-            <div class="cart-header">
-                <i class="fas fa-shopping-cart fa-lg"></i>
+            <div class="cart-header"><i class="fas fa-shopping-cart fa-lg"></i>
                 <h3>Seu Carrinho</h3>
             </div>
-
             <div class="cart-list" id="cartItems">
                 <p style="color: #666; text-align: center; margin-top: 20px;">Carrinho vazio</p>
             </div>
-
             <div class="cart-footer">
-                <div class="total-row">
-                    <span>Total:</span>
-                    <span class="total-price">R$ <span id="cartTotal">0.00</span></span>
+                <div class="total-row"><span>Total:</span><span class="total-price">R$ <span id="cartTotal">0.00</span></span>
                 </div>
-
-                <button id="checkoutBtn" class="checkout-btn">
-                    <i class="fab fa-whatsapp"></i> Finalizar Pedido
-                </button>
+                <button id="checkoutBtn" class="checkout-btn"><i class="fab fa-whatsapp"></i> Finalizar Pedido</button>
             </div>
         </aside>
-
     </div>
 
     <div id="productModal" class="product-modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal()">&times;</span>
-
             <div class="modal-gallery">
                 <img id="modalMainImg" src="" class="modal-main-img">
-                <div id="modalThumbs" class="modal-thumbs">
-                </div>
+                <div id="modalThumbs" class="modal-thumbs"></div>
             </div>
-
             <div class="modal-info">
-                <h2 id="modalTitle" class="modal-title">Nome do Produto</h2>
+                <h2 id="modalTitle" class="modal-title">Nome</h2>
                 <p id="modalPrice" class="modal-price">R$ 0,00</p>
-                <p id="modalDesc" class="modal-desc">Descrição do produto...</p>
-
-                <button id="modalAddBtn" class="action-btn btn-add" style="width: 100%; padding: 15px; font-size: 1.1rem;">
-                    <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
-                </button>
+                <p id="modalDesc" class="modal-desc">Descrição...</p>
+                <button id="modalAddBtn" class="action-btn btn-add" style="width: 100%; padding: 15px; font-size: 1.1rem;"><i class="fas fa-cart-plus"></i> Adicionar</button>
             </div>
         </div>
     </div>
