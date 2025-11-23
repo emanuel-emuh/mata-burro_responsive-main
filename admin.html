@@ -25,47 +25,87 @@
 
     <div class="admin-wrapper">
         <div class="admin-card">
-            <h2><i class="fas fa-plus-circle"></i> Novo Produto</h2>
-            <form id="productForm">
-                <div class="form-group">
-                    <label for="prodName">Nome do Produto</label>
-                    <input type="text" id="prodName" class="input-field" placeholder="Ex: Camisa Oficial 2025" required>
-                </div>
-                <div class="form-group">
-                    <label for="prodPrice">Preço (R$)</label>
-                    <input type="number" id="prodPrice" class="input-field" step="0.01" placeholder="Ex: 149.90" required>
-                </div>
-                <div class="form-group">
-                    <label for="prodCategory">Categoria</label>
-                    <select id="prodCategory" class="input-field" style="cursor: pointer;">
-                        <option value="camisas">Camisas</option>
-                        <option value="acessorios">Acessórios</option>
-                        <option value="eletronicos">Eletrônicos</option>
-                        <option value="outros">Outros</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="prodImage">Link da Imagem (Frente)</label>
-                    <input type="text" id="prodImage" class="input-field" placeholder="Cole o link..." required oninput="previewImage(this.value, 'previewBox', 'imgPreview')">
-                    <div class="preview-container" id="previewBox"><img id="imgPreview" class="preview-img"></div>
-                </div>
-                <div class="form-group">
-                    <label for="prodImageBack" style="color: var(--orange-primary);">Link da Imagem 2 (Opcional)</label>
-                    <input type="text" id="prodImageBack" class="input-field" placeholder="Apenas se for camisa com verso..." oninput="previewImage(this.value, 'previewBoxBack', 'imgPreviewBack')">
-                    <div class="preview-container" id="previewBoxBack"><img id="imgPreviewBack" class="preview-img"></div>
-                </div>
-                <div class="form-group">
-                    <label for="prodDesc">Descrição</label>
-                    <textarea id="prodDesc" class="input-field" rows="3" placeholder="Detalhes do produto..."></textarea>
-                </div>
-                <button type="submit" class="submit-btn"><i class="fas fa-save"></i> Salvar Produto</button>
-            </form>
+            <h2><i class="fas fa-database"></i> Gerenciar Conteúdo</h2>
+
+            <div class="admin-tabs">
+                <button class="tab-btn active" onclick="switchTab('product')">Produtos</button>
+                <button class="tab-btn" onclick="switchTab('news')">Notícias</button>
+            </div>
+
+            <div id="productSection">
+                <form id="productForm">
+                    <div class="form-group">
+                        <label>Nome do Produto</label>
+                        <input type="text" id="prodName" class="input-field" placeholder="Ex: Camisa 2025" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Preço (R$)</label>
+                        <input type="number" id="prodPrice" class="input-field" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Categoria</label>
+                        <select id="prodCategory" class="input-field">
+                            <option value="camisas">Camisas</option>
+                            <option value="acessorios">Acessórios</option>
+                            <option value="eletronicos">Eletrônicos</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Imagem Frente</label>
+                        <input type="text" id="prodImage" class="input-field" placeholder="Link da imagem..." required oninput="previewImage(this.value, 'previewBox', 'imgPreview')">
+                        <div class="preview-container" id="previewBox"><img id="imgPreview" class="preview-img"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Imagem Costas (Opcional)</label>
+                        <input type="text" id="prodImageBack" class="input-field" placeholder="Link da imagem..." oninput="previewImage(this.value, 'previewBoxBack', 'imgPreviewBack')">
+                        <div class="preview-container" id="previewBoxBack"><img id="imgPreviewBack" class="preview-img"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <textarea id="prodDesc" class="input-field" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Salvar Produto</button>
+                </form>
+            </div>
+
+            <div id="newsSection" style="display: none;">
+                <form id="newsForm">
+                    <div class="form-group">
+                        <label>Título da Notícia</label>
+                        <input type="text" id="newsTitle" class="input-field" placeholder="Ex: Vitória no Campeonato!" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Data</label>
+                        <input type="date" id="newsDate" class="input-field" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Imagem de Capa</label>
+                        <input type="text" id="newsImage" class="input-field" placeholder="Link da imagem..." required oninput="previewImage(this.value, 'previewBoxNews', 'imgPreviewNews')">
+                        <div class="preview-container" id="previewBoxNews"><img id="imgPreviewNews" class="preview-img"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Resumo</label>
+                        <textarea id="newsSummary" class="input-field" rows="4" placeholder="Escreva a notícia..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Publicar Notícia</button>
+                </form>
+            </div>
         </div>
 
         <div class="products-list-section">
-            <h3 style="color: #fff; margin-bottom: 20px; border-left: 4px solid var(--orange-primary); padding-left: 10px;">Gerenciar Produtos</h3>
-            <div id="adminProductList">
-                <p style="color: #777; text-align: center;">Carregando lista...</p>
+            <div id="productListContainer">
+                <h3 style="color:#fff; border-left:4px solid var(--orange-primary); padding-left:10px; margin-bottom:20px;">Produtos Cadastrados</h3>
+                <div id="adminProductList">
+                    <p style="color:#777;">Carregando...</p>
+                </div>
+            </div>
+
+            <div id="newsListContainer" style="display: none;">
+                <h3 style="color:#fff; border-left:4px solid var(--orange-primary); padding-left:10px; margin-bottom:20px;">Notícias Publicadas</h3>
+                <div id="adminNewsList">
+                    <p style="color:#777;">Carregando...</p>
+                </div>
             </div>
         </div>
     </div>
@@ -81,6 +121,18 @@
             } else {
                 box.classList.remove('active');
             }
+        }
+
+        function switchTab(tab) {
+            // Alterna Forms
+            document.getElementById('productSection').style.display = tab === 'product' ? 'block' : 'none';
+            document.getElementById('newsSection').style.display = tab === 'news' ? 'block' : 'none';
+            // Alterna Listas
+            document.getElementById('productListContainer').style.display = tab === 'product' ? 'block' : 'none';
+            document.getElementById('newsListContainer').style.display = tab === 'news' ? 'block' : 'none';
+            // Alterna Botões
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
         }
     </script>
     <script type="module" src="js/admin.js"></script>

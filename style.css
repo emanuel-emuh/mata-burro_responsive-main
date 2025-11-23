@@ -41,7 +41,9 @@ h6,
 .filter-btn,
 .shop-title,
 .modal-title,
-.login-header h2 {
+.login-header h2,
+.tab-btn,
+.news-date {
     font-family: 'Oxanium', cursive;
 }
 
@@ -111,7 +113,6 @@ header {
     gap: 25px;
     align-items: center;
     margin-left: auto;
-    /* Empurra o menu para a direita */
     margin-right: 20px;
 }
 
@@ -254,21 +255,17 @@ header {
 }
 
 
-/* =========================================
-   4. HISTÓRIA (ESTILO CARD ATUALIZADO)
-   ========================================= */
+/* História (Estilo Cartão) */
 
 .history-text-box {
     max-width: 900px;
     margin: 0 auto;
     padding: 40px;
-    /* Fundo tipo cartão */
     background: linear-gradient(145deg, #222, #1a1a1a);
     border: 1px solid rgba(255, 140, 0, 0.2);
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     text-align: justify;
-    /* Texto justificado */
     line-height: 1.8;
     color: #ccc;
     font-size: 1.1rem;
@@ -280,22 +277,16 @@ header {
 }
 
 
-/* =========================================
-   5. SLIDER DE JOGADORES (ROLAGEM HORIZONTAL)
-   ========================================= */
+/* Jogadores (Slider Horizontal) */
 
 .players-slider {
     display: flex;
     gap: 30px;
     padding: 20px 5%;
     overflow-x: auto;
-    /* Permite rolar */
     scroll-behavior: smooth;
     justify-content: flex-start;
 }
-
-
-/* Estilo da barra de rolagem */
 
 .players-slider::-webkit-scrollbar {
     height: 8px;
@@ -313,9 +304,7 @@ header {
 
 .player-card {
     flex: 0 0 auto;
-    /* Impede de encolher */
     width: 280px;
-    /* Largura fixa */
     background: linear-gradient(145deg, #222, #1a1a1a);
     border-radius: 15px;
     overflow: hidden;
@@ -364,7 +353,7 @@ header {
 }
 
 
-/* Camisas na Home */
+/* Camisas Home */
 
 .jersey-section {
     background: #151515;
@@ -380,8 +369,95 @@ header {
 }
 
 
+/* Notícias (Home) */
+
+.dark-section {
+    background: linear-gradient(to bottom, #1a1a1a, #121212);
+    padding: 80px 5%;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.news-card {
+    background: linear-gradient(to bottom, #222, #1a1a1a);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: 0.3s;
+    border-bottom: 3px solid var(--orange-primary);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.news-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+}
+
+.news-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+.news-card:hover .news-image img {
+    transform: scale(1.1);
+}
+
+.news-content {
+    padding: 25px;
+}
+
+.news-date {
+    color: var(--orange-primary);
+    font-size: 0.85rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.news-content h3 {
+    font-size: 1.3rem;
+    color: #fff;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.news-content p {
+    color: #ccc;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.read-more {
+    color: var(--orange-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.read-more:hover {
+    color: #fff;
+}
+
+
 /* =========================================
-   6. ADMINISTRAÇÃO
+   4. PÁGINA DE ADMINISTRAÇÃO
    ========================================= */
 
 .admin-wrapper {
@@ -413,6 +489,38 @@ header {
     padding-bottom: 15px;
 }
 
+
+/* Abas do Admin */
+
+.admin-tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    justify-content: center;
+}
+
+.tab-btn {
+    background: #333;
+    border: 1px solid #444;
+    color: #ccc;
+    padding: 12px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: 'Oxanium';
+    font-weight: bold;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tab-btn.active,
+.tab-btn:hover {
+    background: var(--orange-primary);
+    color: #000;
+    border-color: var(--orange-primary);
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.3);
+}
+
 .form-group {
     margin-bottom: 20px;
 }
@@ -422,7 +530,7 @@ header {
     color: #bbb;
     margin-bottom: 8px;
     font-weight: 600;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Oxanium';
 }
 
 .input-field {
@@ -432,8 +540,7 @@ header {
     color: #fff;
     padding: 12px 15px;
     border-radius: 8px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
+    font-family: 'Poppins';
     transition: 0.3s;
 }
 
@@ -544,7 +651,6 @@ header {
     font-size: 0.75rem !important;
     color: #888 !important;
     text-transform: uppercase;
-    font-weight: normal !important;
 }
 
 .delete-btn {
@@ -555,7 +661,7 @@ header {
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins';
     font-size: 0.85rem;
 }
 
@@ -567,7 +673,7 @@ header {
 
 
 /* =========================================
-   7. LOJA
+   5. PÁGINA DA LOJA
    ========================================= */
 
 .shop-wrapper {
@@ -583,6 +689,9 @@ header {
 .products-area {
     width: 100%;
 }
+
+
+/* Filtros */
 
 .filters-bar {
     display: flex;
@@ -613,6 +722,9 @@ header {
     border-color: var(--orange-primary);
     box-shadow: 0 0 15px rgba(255, 140, 0, 0.4);
 }
+
+
+/* Grid Produtos */
 
 .products-grid {
     display: grid;
@@ -719,6 +831,9 @@ header {
     background: var(--orange-dark);
     border-color: var(--orange-dark);
 }
+
+
+/* Carrinho Lateral */
 
 .cart-box {
     background: #1a1a1a;
@@ -846,7 +961,7 @@ header {
 
 
 /* =========================================
-   8. LOGIN & MODAL
+   6. LOGIN & MODAL
    ========================================= */
 
 .login-section {
@@ -1083,7 +1198,7 @@ header {
 
 
 /* =========================================
-   9. FOOTER & RESPONSIVIDADE FINAL
+   7. FOOTER & RESPONSIVIDADE
    ========================================= */
 
 footer {
@@ -1206,9 +1321,11 @@ footer {
     .hero-content h1 {
         font-size: 2.5rem;
     }
-    /* Ajustes para o texto da História no Mobile */
     .history-text-box {
         padding: 25px;
         text-align: left;
+    }
+    .players-slider {
+        padding: 20px;
     }
 }

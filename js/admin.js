@@ -3,25 +3,26 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/fi
 import { doc, getDoc, collection, addDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 const productForm = document.getElementById('productForm');
-const productListContainer = document.getElementById('adminProductList');
+const newsForm = document.getElementById('newsForm');
 
 // ==========================================
-// 1. SEGURANÇA (ADMIN)
+// 1. VERIFICAÇÃO DE SEGURANÇA (ADMIN)
 // ==========================================
 onAuthStateChanged(auth, async(user) => {
     if (user) {
         try {
             const userDoc = await getDoc(doc(db, "users", user.uid));
-
             if (userDoc.exists() && userDoc.data().role === "admin") {
                 console.log("Admin logado: " + user.email);
-                loadAdminProducts(); // Carrega a lista
+                // Carrega as duas listas ao iniciar
+                loadAdminProducts();
+                loadAdminNews();
             } else {
-                alert("Acesso Negado.");
+                alert("Acesso Negado. Apenas administradores.");
                 window.location.href = "index.html";
             }
         } catch (error) {
-            console.error("Erro auth:", error);
+            console.error("Erro de permissão:", error);
             window.location.href = "index.html";
         }
     } else {
@@ -30,119 +31,179 @@ onAuthStateChanged(auth, async(user) => {
 });
 
 // ==========================================
-// 2. LISTAR PRODUTOS
+// 2. GERENCIAR PRODUTOS
 // ==========================================
-async function loadAdminProducts() {
-    if (!productListContainer) return;
 
-    productListContainer.innerHTML = '<p style="color:#888; text-align:center;">Atualizando...</p>';
+// Listar Produtos
+async function loadAdminProducts() {
+    const container = document.getElementById('adminProductList');
+    if (!container) return;
+
+    container.innerHTML = '<p style="color:#888; text-align:center;">Atualizando...</p>';
 
     try {
-        const querySnapshot = await getDocs(collection(db, "products"));
+        const snap = await getDocs(collection(db, "products"));
 
-        if (querySnapshot.empty) {
-            productListContainer.innerHTML = '<p style="color:#ccc; text-align:center;">Nenhum produto cadastrado.</p>';
+        if (snap.empty) {
+            container.innerHTML = '<p style="color:#ccc; text-align:center;">Nenhum produto cadastrado.</p>';
             return;
         }
 
-        productListContainer.innerHTML = "";
+        container.innerHTML = ""; // Limpa lista
 
-        querySnapshot.forEach((docSnap) => {
-            const product = docSnap.data();
-            const id = docSnap.id;
-
-            // Exibe Categoria se existir, senão 'Geral'
-            const categoryDisplay = product.category ? product.category.toUpperCase() : 'GERAL';
-
-            const itemHTML = `
+        snap.forEach(docSnap => {
+            const p = docSnap.data();
+            container.innerHTML += `
                 <div class="admin-product-item">
                     <div class="prod-info">
-                        <img src="${product.image}" class="prod-thumb" onerror="this.src='img/logo.png'">
+                        <img src="${p.image}" class="prod-thumb" onerror="this.src='img/logo.png'">
                         <div class="prod-details">
-                            <h4>${product.name}</h4>
-                            <p>R$ ${product.price.toFixed(2)}</p>
-                            <p class="prod-cat">${categoryDisplay}</p>
+                            <h4>${p.name}</h4>
+                            <p>R$ ${p.price.toFixed(2)}</p>
                         </div>
                     </div>
-                    <button class="delete-btn" onclick="window.deleteProduct('${id}', '${product.name}')">
+                    <button class="delete-btn" onclick="window.deleteItem('products', '${docSnap.id}')">
                         <i class="fas fa-trash"></i> Excluir
                     </button>
                 </div>
             `;
-            productListContainer.innerHTML += itemHTML;
         });
-
     } catch (error) {
-        console.error("Erro lista:", error);
-        productListContainer.innerHTML = '<p style="color:red;">Erro ao carregar lista.</p>';
+        console.error("Erro produtos:", error);
+        container.innerHTML = '<p style="color:red;">Erro ao carregar produtos.</p>';
     }
 }
 
-// ==========================================
-// 3. DELETAR PRODUTO
-// ==========================================
-window.deleteProduct = async(id, name) => {
-    if (confirm(`Tem certeza que deseja APAGAR:\n"${name}"?`)) {
-        try {
-            await deleteDoc(doc(db, "products", id));
-            alert("Produto removido!");
-            loadAdminProducts();
-        } catch (error) {
-            console.error(error);
-            alert("Erro ao apagar.");
-        }
-    }
-};
-
-// ==========================================
-// 4. SALVAR NOVO PRODUTO (ATUALIZADO)
-// ==========================================
+// Salvar Produto
 if (productForm) {
     productForm.addEventListener('submit', async(e) => {
         e.preventDefault();
-
-        const name = document.getElementById('prodName').value;
-        const price = parseFloat(document.getElementById('prodPrice').value);
-        const category = document.getElementById('prodCategory').value;
-        const image = document.getElementById('prodImage').value;
-        const imageBack = document.getElementById('prodImageBack').value;
-        const description = document.getElementById('prodDesc').value;
-
         const btn = productForm.querySelector('button');
-        const originalText = btn.innerHTML;
+        const originalText = btn.innerText;
+        btn.innerText = "Salvando...";
+        btn.disabled = true;
 
         try {
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Salvando...';
-            btn.disabled = true;
-
             await addDoc(collection(db, "products"), {
-                name: name,
-                price: price,
-                category: category,
-                image: image,
-                imageBack: imageBack, // Salva a imagem das costas
-                description: description,
+                name: document.getElementById('prodName').value,
+                price: parseFloat(document.getElementById('prodPrice').value),
+                category: document.getElementById('prodCategory').value,
+                image: document.getElementById('prodImage').value,
+                imageBack: document.getElementById('prodImageBack').value || "",
+                description: document.getElementById('prodDesc').value,
                 createdAt: new Date()
             });
 
-            alert("✅ Produto cadastrado!");
-
+            alert("✅ Produto salvo com sucesso!");
             productForm.reset();
-
-            // === CORREÇÃO AQUI ===
-            // Limpa AS DUAS caixas de preview
-            document.getElementById('previewBox').classList.remove('active');
-            const previewBack = document.getElementById('previewBoxBack');
-            if (previewBack) previewBack.classList.remove('active');
-
+            // Limpa os previews de imagem
+            document.querySelectorAll('.preview-container').forEach(el => el.classList.remove('active'));
             loadAdminProducts();
 
         } catch (error) {
-            console.error("Erro:", error);
-            alert("Erro: " + error.message);
+            alert("Erro ao salvar produto: " + error.message);
         } finally {
-            btn.innerHTML = originalText;
+            btn.innerText = originalText;
             btn.disabled = false;
         }
     });
 }
+
+// ==========================================
+// 3. GERENCIAR NOTÍCIAS
+// ==========================================
+
+// Listar Notícias
+async function loadAdminNews() {
+    const container = document.getElementById('adminNewsList');
+    if (!container) return;
+
+    container.innerHTML = '<p style="color:#888; text-align:center;">Atualizando...</p>';
+
+    try {
+        const snap = await getDocs(collection(db, "news"));
+
+        if (snap.empty) {
+            container.innerHTML = '<p style="color:#ccc; text-align:center;">Nenhuma notícia publicada.</p>';
+            return;
+        }
+
+        container.innerHTML = ""; // Limpa lista
+
+        snap.forEach(docSnap => {
+            const n = docSnap.data();
+            container.innerHTML += `
+                <div class="admin-product-item">
+                    <div class="prod-info">
+                        <img src="${n.image}" class="prod-thumb" onerror="this.src='img/logo.png'">
+                        <div class="prod-details">
+                            <h4>${n.title}</h4>
+                            <p style="font-size:0.8rem; color:#888;">${n.date}</p>
+                        </div>
+                    </div>
+                    <button class="delete-btn" onclick="window.deleteItem('news', '${docSnap.id}')">
+                        <i class="fas fa-trash"></i> Excluir
+                    </button>
+                </div>
+            `;
+        });
+    } catch (error) {
+        console.error("Erro notícias:", error);
+        container.innerHTML = '<p style="color:red;">Erro ao carregar notícias.</p>';
+    }
+}
+
+// Salvar Notícia
+if (newsForm) {
+    newsForm.addEventListener('submit', async(e) => {
+        e.preventDefault();
+        const btn = newsForm.querySelector('button');
+        const originalText = btn.innerText;
+        btn.innerText = "Publicando...";
+        btn.disabled = true;
+
+        try {
+            await addDoc(collection(db, "news"), {
+                title: document.getElementById('newsTitle').value,
+                date: document.getElementById('newsDate').value,
+                image: document.getElementById('newsImage').value,
+                summary: document.getElementById('newsSummary').value,
+                createdAt: new Date()
+            });
+
+            alert("📰 Notícia publicada!");
+            newsForm.reset();
+            document.querySelectorAll('.preview-container').forEach(el => el.classList.remove('active'));
+            loadAdminNews();
+
+        } catch (error) {
+            alert("Erro ao publicar notícia: " + error.message);
+        } finally {
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }
+    });
+}
+
+// ==========================================
+// 4. FUNÇÃO GLOBAL DE EXCLUIR
+// ==========================================
+// Esta função serve tanto para produtos quanto para notícias
+window.deleteItem = async(collectionName, id) => {
+    const tipo = collectionName === 'products' ? 'o produto' : 'a notícia';
+
+    if (confirm(`Tem certeza que deseja excluir ${tipo}?`)) {
+        try {
+            await deleteDoc(doc(db, collectionName, id));
+            alert("Item removido!");
+
+            // Atualiza a lista correta
+            if (collectionName === 'products') loadAdminProducts();
+            else loadAdminNews();
+
+        } catch (error) {
+            console.error("Erro ao deletar:", error);
+            alert("Erro ao excluir.");
+        }
+    }
+};
