@@ -1169,3 +1169,39 @@ footer {
         padding: 0 20px;
     }
 }
+
+
+/* Estilos para o Texto da História */
+
+.history-content-box {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 1.8;
+    color: #ccc;
+    font-size: 1.05rem;
+}
+
+.history-content-box p {
+    margin-bottom: 20px;
+    /* Espaço entre parágrafos */
+}
+
+
+/* Destaque Laranja (Nome do Time) */
+
+.highlight-text {
+    color: var(--orange-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+/* Destaque dos Jogos (Opcional: cor diferente ou negrito) */
+
+.game-highlight {
+    color: #fff;
+    font-weight: 600;
+    border-bottom: 1px solid var(--orange-primary);
+}
