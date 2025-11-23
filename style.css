@@ -65,7 +65,6 @@ header {
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
     height: 80px;
-    /* Altura fixa compacta */
     display: flex;
     align-items: center;
     position: fixed;
@@ -90,7 +89,6 @@ header {
 
 .logo-icon img {
     height: 50px;
-    /* CORRIGIDO: Era 100px, agora é 50px para caber na barra */
     width: auto;
     border-radius: 50%;
     border: 2px solid var(--orange-primary);
@@ -113,7 +111,7 @@ header {
     gap: 25px;
     align-items: center;
     margin-left: auto;
-    /* Empurra para a direita */
+    /* Empurra o menu para a direita */
     margin-right: 20px;
 }
 
@@ -188,7 +186,7 @@ header {
 
 
 /* =========================================
-   3. PÁGINA INICIAL (INDEX)
+   3. PÁGINA INICIAL (HOME)
    ========================================= */
 
 .hero-banner {
@@ -257,18 +255,23 @@ header {
 
 
 /* =========================================
-   4. HISTÓRIA (CORRIGIDO - TEXTO CORRIDO)
+   4. HISTÓRIA (ESTILO CARD ATUALIZADO)
    ========================================= */
 
 .history-text-box {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
+    padding: 40px;
+    /* Fundo tipo cartão */
+    background: linear-gradient(145deg, #222, #1a1a1a);
+    border: 1px solid rgba(255, 140, 0, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     text-align: justify;
-    /* Justificado para ficar bonito em bloco */
+    /* Texto justificado */
     line-height: 1.8;
     color: #ccc;
     font-size: 1.1rem;
-    padding: 0 20px;
 }
 
 .highlight-text {
@@ -278,33 +281,60 @@ header {
 
 
 /* =========================================
-   5. JOGADORES & CAMISAS
+   5. SLIDER DE JOGADORES (ROLAGEM HORIZONTAL)
    ========================================= */
 
-.players-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+.players-slider {
+    display: flex;
     gap: 30px;
-    padding: 0 5%;
+    padding: 20px 5%;
+    overflow-x: auto;
+    /* Permite rolar */
+    scroll-behavior: smooth;
+    justify-content: flex-start;
+}
+
+
+/* Estilo da barra de rolagem */
+
+.players-slider::-webkit-scrollbar {
+    height: 8px;
+}
+
+.players-slider::-webkit-scrollbar-track {
+    background: #222;
+    border-radius: 4px;
+}
+
+.players-slider::-webkit-scrollbar-thumb {
+    background: var(--orange-primary);
+    border-radius: 4px;
 }
 
 .player-card {
+    flex: 0 0 auto;
+    /* Impede de encolher */
+    width: 280px;
+    /* Largura fixa */
     background: linear-gradient(145deg, #222, #1a1a1a);
     border-radius: 15px;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.05);
     transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
 }
 
 .player-card:hover {
     transform: translateY(-10px);
     border-color: var(--orange-primary);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 .player-image {
     height: 300px;
     overflow: hidden;
+    width: 100%;
 }
 
 .player-image img {
@@ -333,6 +363,9 @@ header {
     text-transform: uppercase;
 }
 
+
+/* Camisas na Home */
+
 .jersey-section {
     background: #151515;
     padding: 80px 5%;
@@ -348,7 +381,7 @@ header {
 
 
 /* =========================================
-   6. PÁGINA DE ADMINISTRAÇÃO
+   6. ADMINISTRAÇÃO
    ========================================= */
 
 .admin-wrapper {
@@ -357,7 +390,6 @@ header {
     flex-direction: column;
     align-items: center;
     padding: 140px 20px 60px;
-    /* Espaço para navbar */
     gap: 40px;
 }
 
@@ -535,14 +567,13 @@ header {
 
 
 /* =========================================
-   7. PÁGINA DA LOJA
+   7. LOJA
    ========================================= */
 
 .shop-wrapper {
     max-width: 1400px;
     margin: 0 auto;
     padding: 140px 5% 60px;
-    /* Espaço topo ajustado */
     display: grid;
     grid-template-columns: 1fr 350px;
     gap: 40px;
@@ -1175,7 +1206,9 @@ footer {
     .hero-content h1 {
         font-size: 2.5rem;
     }
-    .players-grid {
-        padding: 0 20px;
+    /* Ajustes para o texto da História no Mobile */
+    .history-text-box {
+        padding: 25px;
+        text-align: left;
     }
 }
