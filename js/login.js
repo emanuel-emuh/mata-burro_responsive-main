@@ -1,53 +1,57 @@
-import { auth, db } from './firebase-config.js'; // ADICIONADO: db
+import { auth, db } from './firebase-config.js'; //
 import { onAuthStateChanged, signOut, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js"; // ADICIONADO: ferramentas do Firestore
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
+// 1. Seleciona os elementos da página
 const loginBtn = document.getElementById('navLoginBtn');
 const buyButtons = document.querySelectorAll('.buy-btn, .buy-button');
 const loginForm = document.getElementById('loginForm');
 
-// LÓGICA DE LOGIN COMPLETA
+// ==========================================
+// 1. LÓGICA DE LOGIN (FORMULÁRIO)
+// ==========================================
 if (loginForm) {
-    loginForm.addEventListener('submit', async(e) => { // Note o 'async' aqui
-        e.preventDefault();
+    loginForm.addEventListener('submit', async(e) => {
+        e.preventDefault(); // Impede o recarregamento da página
 
         const email = document.getElementById('emailInput').value;
         const password = document.getElementById('passwordInput').value;
         const btn = loginForm.querySelector('button');
         const originalText = btn.innerText;
 
-        btn.innerText = "Verificando...";
+        // Feedback visual para o usuário
+        btn.innerText = "Verificando permissões...";
         btn.disabled = true;
 
         try {
-            // 1. O Authentication verifica a senha
+            // A. Login no Authentication (Email/Senha)
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            console.log("Senha correta. Buscando dados no Firestore...");
+            console.log("Login Auth OK. Verificando cargo no Firestore...");
 
-            // 2. AGORA sim, vamos ao seu Banco de Dados (Firestore)
+            // B. Busca dados extras no Firestore (Role/Cargo)
             const docRef = doc(db, "users", user.uid);
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {
                 const userData = docSnap.data();
-                console.log("Dados do Firestore:", userData);
 
-                // Exemplo: Se for Admin, manda para a página de Admin
-                if (userData.role === 'admin') {
+                // C. Redirecionamento baseado no Cargo
+                if (userData.role === "admin") {
+                    console.log("É Admin! Redirecionando...");
                     window.location.href = "admin.html";
                 } else {
+                    console.log("É Membro. Redirecionando para Home...");
                     window.location.href = "index.html";
                 }
             } else {
-                // Usuário existe no Auth mas não tem documento no Firestore (caso raro)
-                console.log("Usuário sem registro no banco!");
+                // Se o usuário não tiver dados no banco, vai para a home por padrão
                 window.location.href = "index.html";
             }
 
         } catch (error) {
-            console.error("Erro:", error);
+            console.error("Erro no login:", error);
             btn.innerText = originalText;
             btn.disabled = false;
 
@@ -60,46 +64,81 @@ if (loginForm) {
     });
 }
 
-// ... (O resto do código onAuthStateChanged mantém igual) ...
-// Apenas certifique-se de manter a função onAuthStateChanged e logoutUser abaixo disto
+// ==========================================
+// 2. MONITOR DE ESTADO (UI E PERMISSÕES)
+// ==========================================
 onAuthStateChanged(auth, (user) => {
-    // ... seu código de UI ...
-    // (Copie do exemplo anterior a parte do onAuthStateChanged)
     if (user) {
-        // Lógica de usuário logado
+        // --- USUÁRIO LOGADO ---
+        console.log("Usuário logado:", user.email);
+
+        // A. Atualiza o Botão da Navbar (Nome + Logout)
         if (loginBtn) {
-            // Tenta pegar o nome do Auth, se não tiver, tenta do email
             let userName = user.displayName;
             if (!userName) {
                 userName = user.email.split('@')[0];
+                // Capitaliza a primeira letra
+                userName = userName.charAt(0).toUpperCase() + userName.slice(1);
             }
 
-            loginBtn.innerHTML = `<i class="fas fa-user-circle"></i> ${userName}`;
+            loginBtn.innerHTML = `<i class="fas fa-user-circle" style="margin-right: 5px;"></i> ${userName}`;
             loginBtn.href = "#";
+            loginBtn.title = "Clique para Sair";
+
+            // Ao clicar no nome, pergunta se quer sair
             loginBtn.onclick = (e) => {
                 e.preventDefault();
-                if (confirm("Deseja sair?")) logoutUser();
-            }
+                if (confirm(`Olá, ${userName}!\nDeseja sair da sua conta?`)) {
+                    logoutUser();
+                }
+            };
         }
-        // Libera botões
-        buyButtons.forEach(btn => {
-            btn.style.opacity = "1";
-            btn.style.cursor = "pointer";
-            btn.onclick = null;
-        });
+
+        // B. Libera os botões de compra
+        if (buyButtons) {
+            buyButtons.forEach(btn => {
+                btn.style.opacity = "1";
+                btn.style.cursor = "pointer";
+                btn.onclick = null; // Remove qualquer bloqueio anterior
+            });
+        }
+
     } else {
-        // Lógica de visitante
+        // --- VISITANTE (NÃO LOGADO) ---
+        console.log("Visitante");
+
+        // A. Reseta o botão da Navbar
         if (loginBtn) {
             loginBtn.innerHTML = 'Login';
             loginBtn.href = "login.html";
             loginBtn.onclick = null;
         }
-        // Bloqueia botões...
+
+        // B. Bloqueia os botões de compra
+        if (buyButtons) {
+            buyButtons.forEach(btn => {
+                btn.onclick = (e) => {
+                    e.preventDefault(); // Impede ir para o WhatsApp/Página de compra
+
+                    const desejaLogar = confirm("🔒 ACESSO RESTRITO\n\nVocê precisa de uma conta para comprar itens exclusivos.\n\nDeseja fazer login ou criar conta agora?");
+
+                    if (desejaLogar) {
+                        window.location.href = "login.html";
+                    }
+                };
+            });
+        }
     }
 });
 
+// ==========================================
+// 3. FUNÇÃO DE LOGOUT
+// ==========================================
 function logoutUser() {
     signOut(auth).then(() => {
-        window.location.href = "index.html";
+        // Recarrega a página ou manda para o login
+        window.location.href = "login.html";
+    }).catch((error) => {
+        console.error("Erro ao sair:", error);
     });
 }
