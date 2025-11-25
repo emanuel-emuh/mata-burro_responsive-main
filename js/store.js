@@ -237,7 +237,8 @@ if (checkoutBtn) {
         message += `\n💰 *VALOR TOTAL: R$ ${total}*`;
         message += `\n\n_Aguardo instruções de pagamento._`;
 
-        const phone = "5584999999999";
+        // === NÚMERO ATUALIZADO ===
+        const phone = "5584998228590";
         const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
         window.open(url, '_blank');
